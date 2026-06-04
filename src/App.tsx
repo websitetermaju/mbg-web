@@ -10,6 +10,8 @@ import { BahanBakuFormPage } from '@/pages/bahan-baku/BahanBakuFormPage'
 import { PengadaanListPage } from '@/pages/pengadaan/PengadaanListPage'
 import { PengadaanFormPage } from '@/pages/pengadaan/PengadaanFormPage'
 import { PengadaanDetailPage } from '@/pages/pengadaan/PengadaanDetailPage'
+import { ProduksiListPage } from '@/pages/produksi/ProduksiListPage'
+import { ProduksiFormPage } from '@/pages/produksi/ProduksiFormPage'
 
 export default function App() {
   return (
@@ -27,6 +29,9 @@ export default function App() {
           <Route path="pengadaan" element={<PengadaanListPage />} />
           <Route path="pengadaan/baru" element={<PengadaanFormPage />} />
           <Route path="pengadaan/:id" element={<PengadaanDetailPage />} />
+          <Route path="produksi" element={<ProduksiListPage />} />
+          <Route path="produksi/baru" element={<ProduksiFormPage />} />
+          <Route path="produksi/:id" element={<ProduksiListPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
