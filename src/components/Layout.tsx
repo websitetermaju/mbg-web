@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { useQuery } from '@tanstack/react-query'
 import { notifikasiApi } from '@/api/endpoints/notifikasi'
@@ -19,6 +19,7 @@ const navItems = [
 export function Layout() {
   const { user, logout } = useAuthStore()
   const navigate = useNavigate()
+  const location = useLocation()
   useNotifikasiSocket()
 
   const { data: unreadData } = useQuery({
@@ -33,23 +34,29 @@ export function Layout() {
     navigate('/login')
   }
 
+  const isActive = (to: string) =>
+    to === '/' ? location.pathname === '/' : location.pathname.startsWith(to)
+
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="w-56 bg-bgn-900 text-white flex flex-col">
+      <aside className="w-60 bg-bgn-900 text-white flex flex-col shrink-0">
         <div className="px-4 py-5 border-b border-bgn-800">
-          <p className="font-bold text-lg">MBG</p>
-          <p className="text-xs text-bgn-300 truncate">{user?.email}</p>
-          <p className="text-xs text-bgn-200">{user?.role}</p>
+          <p className="font-bold text-xl tracking-wide">MBG</p>
+          <p className="text-xs text-bgn-200 mt-0.5">Makan Bergizi Gratis</p>
+          <p className="text-xs text-bgn-300 mt-2 truncate">{user?.email}</p>
+          <p className="text-xs text-bgn-400 font-medium">{user?.role}</p>
         </div>
-        <nav className="flex-1 py-2">
-          {navItems.map((item) =>
-            item.label === 'Notifikasi' ? (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="flex items-center justify-between px-4 py-2 text-sm hover:bg-bgn-800 transition-colors"
-              >
+        <nav className="flex-1 py-2 overflow-y-auto">
+          {navItems.map((item) => {
+            const active = isActive(item.to)
+            const baseClass = `flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
+              active
+                ? 'border-l-4 border-bgn-green-400 bg-bgn-800 font-semibold text-white'
+                : 'border-l-4 border-transparent hover:bg-bgn-800 text-bgn-100'
+            }`
+            return item.label === 'Notifikasi' ? (
+              <Link key={item.to} to={item.to} className={baseClass}>
                 <span>{item.label}</span>
                 {unreadCount > 0 && (
                   <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center">
@@ -58,15 +65,11 @@ export function Layout() {
                 )}
               </Link>
             ) : (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="block px-4 py-2 text-sm hover:bg-bgn-800 transition-colors"
-              >
+              <Link key={item.to} to={item.to} className={baseClass}>
                 {item.label}
               </Link>
             )
-          )}
+          })}
         </nav>
         <button
           onClick={handleLogout}
