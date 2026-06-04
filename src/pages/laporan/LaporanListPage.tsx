@@ -43,7 +43,8 @@ export function LaporanListPage() {
       a.click()
       document.body.removeChild(a)
       setTimeout(() => URL.revokeObjectURL(url), 100)
-    } catch {
+    } catch (err) {
+      console.error('[Export]', err)
       window.alert('Gagal mengunduh file. Silakan coba lagi.')
     } finally {
       setExporting(null)

@@ -8,13 +8,13 @@ export const laporanApi = {
   create: (data: { judul: string; jenis: string; periodeMulai: string; periodeAkhir: string }) =>
     api.post<ApiResponse<Laporan>>('/laporan', data),
   review: (id: string, catatan: string) =>
-    api.patch<ApiResponse<Laporan>>(`/laporan/${id}/review`, { catatan }),
+    api.post<ApiResponse<Laporan>>(`/laporan/${id}/review`, { catatan }),
   submit: (id: string) =>
-    api.patch<ApiResponse<Laporan>>(`/laporan/${id}/submit`),
+    api.post<ApiResponse<Laporan>>(`/laporan/${id}/submit`),
   accept: (id: string) =>
-    api.patch<ApiResponse<Laporan>>(`/laporan/${id}/accept`),
+    api.post<ApiResponse<Laporan>>(`/laporan/${id}/accept`),
   reject: (id: string, catatan: string) =>
-    api.patch<ApiResponse<Laporan>>(`/laporan/${id}/reject`, { catatan }),
+    api.post<ApiResponse<Laporan>>(`/laporan/${id}/reject`, { catatan }),
   delete: (id: string) => api.delete(`/laporan/${id}`),
   export: (id: string, format: 'pdf' | 'excel') =>
     api.get<Blob>(`/laporan/${id}/export`, {
