@@ -39,8 +39,12 @@ export function LaporanListPage() {
       const a = document.createElement('a')
       a.href = url
       a.download = `laporan-${id}.${format === 'pdf' ? 'pdf' : 'xlsx'}`
+      document.body.appendChild(a)
       a.click()
-      URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+      setTimeout(() => URL.revokeObjectURL(url), 100)
+    } catch {
+      window.alert('Gagal mengunduh file. Silakan coba lagi.')
     } finally {
       setExporting(null)
     }
@@ -91,14 +95,14 @@ export function LaporanListPage() {
                         disabled={exporting === l.id + 'excel'}
                         className="text-green-600 hover:underline text-xs"
                       >
-                        {exporting === l.id + 'excel' ? '...' : 'Excel'}
+                        {exporting === l.id + 'excel' ? 'Memuat...' : 'Excel'}
                       </button>
                       <button
                         onClick={() => { void handleExport(l.id, 'pdf') }}
                         disabled={exporting === l.id + 'pdf'}
                         className="text-red-600 hover:underline text-xs"
                       >
-                        {exporting === l.id + 'pdf' ? '...' : 'PDF'}
+                        {exporting === l.id + 'pdf' ? 'Memuat...' : 'PDF'}
                       </button>
                       {l.status === 'REVIEWED' && (
                         <button
