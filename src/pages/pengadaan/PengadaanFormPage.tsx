@@ -74,7 +74,7 @@ export function PengadaanFormPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Nomor PO</label>
               <input
                 {...register('nomorPo', { required: true })}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
               />
               {errors.nomorPo && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
             </div>
@@ -83,7 +83,7 @@ export function PengadaanFormPage() {
               <input
                 type="date"
                 {...register('tanggal', { required: true })}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
               />
               {errors.tanggal && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
             </div>
@@ -92,7 +92,7 @@ export function PengadaanFormPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Supplier</label>
             <input
               {...register('supplier', { required: true })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
             {errors.supplier && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
           </div>
@@ -103,7 +103,7 @@ export function PengadaanFormPage() {
             <textarea
               {...register('catatan')}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
           </div>
         </div>
@@ -115,7 +115,7 @@ export function PengadaanFormPage() {
             <button
               type="button"
               onClick={() => append({ bahanBakuId: '', jumlah: 1, hargaSatuan: 0 })}
-              className="text-green-600 text-sm hover:underline"
+              className="text-bgn-800 text-sm hover:underline"
             >
               + Tambah Item
             </button>
@@ -131,7 +131,7 @@ export function PengadaanFormPage() {
                   <input
                     {...register(`items.${idx}.bahanBakuId`, { required: true })}
                     placeholder="UUID bahan baku"
-                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-bgn-600 focus:outline-none"
                   />
                 </div>
                 <div>
@@ -140,7 +140,7 @@ export function PengadaanFormPage() {
                     type="number"
                     min={1}
                     {...register(`items.${idx}.jumlah`, { required: true, min: 1 })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-bgn-600 focus:outline-none"
                   />
                 </div>
                 <div>
@@ -149,7 +149,7 @@ export function PengadaanFormPage() {
                     type="number"
                     min={0}
                     {...register(`items.${idx}.hargaSatuan`, { required: true, min: 0 })}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-bgn-600 focus:outline-none"
                   />
                 </div>
                 <div className="pt-5">
@@ -185,7 +185,7 @@ export function PengadaanFormPage() {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
           >
             {mutation.isPending ? 'Menyimpan...' : 'Buat PO'}
           </button>

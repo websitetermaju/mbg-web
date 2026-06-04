@@ -25,14 +25,14 @@ function DeliverModal({
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+            className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:bg-bgn-50 file:text-bgn-900 hover:file:bg-bgn-100"
           />
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => file && onConfirm(file)}
             disabled={!file}
-            className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -65,7 +65,7 @@ function GagalModal({
             onChange={(e) => setAlasan(e.target.value)}
             rows={3}
             placeholder="Jelaskan alasan distribusi gagal..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
           />
         </div>
         <div className="flex gap-2">
@@ -131,7 +131,7 @@ export function DistribusiListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Distribusi</h1>
         <Link
           to="/distribusi/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Buat Distribusi
         </Link>
@@ -190,7 +190,7 @@ export function DistribusiListPage() {
                         <>
                           <button
                             onClick={() => setDeliverItem(d)}
-                            className="text-green-600 hover:underline"
+                            className="text-bgn-800 hover:underline"
                           >
                             Terkirim
                           </button>

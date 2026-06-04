@@ -30,7 +30,7 @@ function SelesaiModal({
               min={0}
               value={porsiDiproduksi}
               onChange={(e) => setPorsiDiproduksi(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
           </div>
           <div>
@@ -40,7 +40,7 @@ function SelesaiModal({
               min={0}
               value={porsiGagal}
               onChange={(e) => setPorsiGagal(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
           </div>
           <div>
@@ -49,7 +49,7 @@ function SelesaiModal({
               value={catatan}
               onChange={(e) => setCatatan(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
           </div>
         </div>
@@ -57,7 +57,7 @@ function SelesaiModal({
           <button
             onClick={() => onConfirm(porsiDiproduksi, porsiGagal, catatan)}
             disabled={porsiDiproduksi <= 0}
-            className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -109,7 +109,7 @@ export function ProduksiListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Produksi</h1>
         <Link
           to="/produksi/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Buat Produksi
         </Link>
@@ -148,7 +148,7 @@ export function ProduksiListPage() {
                         <>
                           <button
                             onClick={() => mulaiMutation.mutate(p.id)}
-                            className="text-green-600 hover:underline"
+                            className="text-bgn-800 hover:underline"
                           >
                             Mulai
                           </button>
@@ -164,7 +164,7 @@ export function ProduksiListPage() {
                         <>
                           <button
                             onClick={() => setSelesaiItem(p)}
-                            className="text-green-600 hover:underline"
+                            className="text-bgn-800 hover:underline"
                           >
                             Selesai
                           </button>

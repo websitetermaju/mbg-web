@@ -38,7 +38,7 @@ export function PengadaanListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Pengadaan Bahan Baku</h1>
         <Link
           to="/pengadaan/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Buat PO
         </Link>
@@ -77,7 +77,7 @@ export function PengadaanListPage() {
                         <>
                           <button
                             onClick={() => approveMutation.mutate(p.id)}
-                            className="text-green-600 hover:underline"
+                            className="text-bgn-800 hover:underline"
                           >
                             Setujui
                           </button>
@@ -106,7 +106,7 @@ export function PengadaanListPage() {
                         </>
                       )}
                       {p.status === 'ORDERED' && (
-                        <Link to={`/pengadaan/${p.id}`} className="text-green-600 hover:underline">
+                        <Link to={`/pengadaan/${p.id}`} className="text-bgn-800 hover:underline">
                           Terima Barang
                         </Link>
                       )}

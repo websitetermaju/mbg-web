@@ -36,7 +36,7 @@ export function KeuanganListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Keuangan</h1>
         <Link
           to="/keuangan/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Catat Transaksi
         </Link>
@@ -44,9 +44,9 @@ export function KeuanganListPage() {
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-          <p className="text-sm text-green-600">Total Pemasukan (halaman ini)</p>
-          <p className="text-xl font-bold text-green-700">Rp {totalPemasukan.toLocaleString('id-ID')}</p>
+        <div className="bg-bgn-50 border border-bgn-200 rounded-xl p-4">
+          <p className="text-sm text-bgn-800">Total Pemasukan (halaman ini)</p>
+          <p className="text-xl font-bold text-bgn-900">Rp {totalPemasukan.toLocaleString('id-ID')}</p>
         </div>
         <div className="bg-red-50 border border-red-200 rounded-xl p-4">
           <p className="text-sm text-red-600">Total Pengeluaran (halaman ini)</p>
@@ -62,8 +62,8 @@ export function KeuanganListPage() {
             onClick={() => setFilterJenis(j)}
             className={`px-3 py-1 rounded-full text-sm border transition-colors ${
               filterJenis === j
-                ? 'bg-green-600 text-white border-green-600'
-                : 'border-gray-300 text-gray-600 hover:border-green-500'
+                ? 'bg-bgn-900 text-white border-bgn-800'
+                : 'border-gray-300 text-gray-600 hover:border-bgn-600'
             }`}
           >
             {j === '' ? 'Semua' : j === 'PEMASUKAN' ? 'Pemasukan' : 'Pengeluaran'}
@@ -94,7 +94,7 @@ export function KeuanganListPage() {
                     <span
                       className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                         k.jenisTransaksi === 'PEMASUKAN'
-                          ? 'bg-green-100 text-green-700'
+                          ? 'bg-bgn-100 text-bgn-900'
                           : 'bg-red-100 text-red-700'
                       }`}
                     >
@@ -103,7 +103,7 @@ export function KeuanganListPage() {
                   </td>
                   <td className="px-4 py-3 text-gray-600">{k.kategori}</td>
                   <td className={`px-4 py-3 text-right font-medium ${
-                    k.jenisTransaksi === 'PEMASUKAN' ? 'text-green-600' : 'text-red-600'
+                    k.jenisTransaksi === 'PEMASUKAN' ? 'text-bgn-800' : 'text-red-600'
                   }`}>
                     {k.jenisTransaksi === 'PEMASUKAN' ? '+' : '-'} Rp {k.jumlah.toLocaleString('id-ID')}
                   </td>

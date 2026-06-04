@@ -29,7 +29,7 @@ function TambahStokModal({
               min={1}
               value={jumlah}
               onChange={(e) => setJumlah(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
             />
           </div>
           <div>
@@ -37,7 +37,7 @@ function TambahStokModal({
             <input
               value={referensi}
               onChange={(e) => setReferensi(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
               placeholder="Opsional"
             />
           </div>
@@ -46,7 +46,7 @@ function TambahStokModal({
           <button
             onClick={() => onConfirm(jumlah, referensi)}
             disabled={jumlah <= 0}
-            className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -92,7 +92,7 @@ export function BahanBakuListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Bahan Baku</h1>
         <Link
           to="/bahan-baku/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Tambah Bahan
         </Link>
@@ -127,7 +127,7 @@ export function BahanBakuListPage() {
                     <div className="flex items-center gap-2 justify-end">
                       <button
                         onClick={() => setModalItem(b)}
-                        className="text-green-600 hover:underline text-sm"
+                        className="text-bgn-800 hover:underline text-sm"
                       >
                         Tambah Stok
                       </button>

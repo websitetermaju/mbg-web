@@ -60,7 +60,7 @@ export function LaporanListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Laporan</h1>
         <Link
           to="/laporan/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Generate Laporan
         </Link>
@@ -94,7 +94,7 @@ export function LaporanListPage() {
                       <button
                         onClick={() => { void handleExport(l.id, 'excel') }}
                         disabled={exporting === l.id + 'excel'}
-                        className="text-green-600 hover:underline text-xs"
+                        className="text-bgn-800 hover:underline text-xs"
                       >
                         {exporting === l.id + 'excel' ? 'Memuat...' : 'Excel'}
                       </button>
@@ -116,7 +116,7 @@ export function LaporanListPage() {
                       {l.status === 'SUBMITTED' && (
                         <button
                           onClick={() => acceptMutation.mutate(l.id)}
-                          className="text-green-600 hover:underline"
+                          className="text-bgn-800 hover:underline"
                         >
                           Terima
                         </button>

@@ -35,7 +35,7 @@ export function MenuListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Menu Harian</h1>
         <Link
           to="/menu/baru"
-          className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
         >
           + Buat Menu
         </Link>
@@ -71,7 +71,7 @@ export function MenuListPage() {
                           <Link to={`/menu/${m.id}/edit`} className="text-blue-600 hover:underline">Edit</Link>
                           <button
                             onClick={() => transisiMutation.mutate({ id: m.id, status: 'APPROVED' })}
-                            className="text-green-600 hover:underline"
+                            className="text-bgn-800 hover:underline"
                           >
                             Setujui
                           </button>

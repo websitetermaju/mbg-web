@@ -56,18 +56,18 @@ export function BahanBakuFormPage() {
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Nama Bahan</label>
-          <input {...register('nama', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+          <input {...register('nama', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           {errors.nama && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Satuan</label>
-            <input {...register('satuan', { required: true })} placeholder="kg, liter, pcs" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+            <input {...register('satuan', { required: true })} placeholder="kg, liter, pcs" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
             {errors.satuan && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-            <select {...register('kategori', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none">
+            <select {...register('kategori', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none">
               {KATEGORI_OPTIONS.map((k) => <option key={k} value={k}>{k}</option>)}
             </select>
           </div>
@@ -75,22 +75,22 @@ export function BahanBakuFormPage() {
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Stok Awal</label>
-            <input type="number" min={0} {...register('stokAwal', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+            <input type="number" min={0} {...register('stokAwal', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Stok Minimum</label>
-            <input type="number" min={0} {...register('stokMinimum', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+            <input type="number" min={0} {...register('stokMinimum', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Harga/Satuan</label>
-            <input type="number" min={0} {...register('hargaSatuan', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+            <input type="number" min={0} {...register('hargaSatuan', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           </div>
         </div>
         {mutation.error && (
           <p className="text-red-500 text-sm">{getErrorMessage(mutation.error)}</p>
         )}
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={mutation.isPending} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50">
+          <button type="submit" disabled={mutation.isPending} className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50">
             {mutation.isPending ? 'Menyimpan...' : 'Simpan'}
           </button>
           <button type="button" onClick={() => navigate('/bahan-baku')} className="border border-gray-300 px-6 py-2 rounded-lg hover:bg-gray-50">

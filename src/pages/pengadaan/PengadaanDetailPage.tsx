@@ -90,7 +90,7 @@ export function PengadaanDetailPage() {
                           [item.id]: Number(e.target.value),
                         }))
                       }
-                      className="w-20 border border-gray-300 rounded px-2 py-1 text-right focus:ring-2 focus:ring-green-500 focus:outline-none"
+                      className="w-20 border border-gray-300 rounded px-2 py-1 text-right focus:ring-2 focus:ring-bgn-600 focus:outline-none"
                     />
                   </td>
                 )}
@@ -114,7 +114,7 @@ export function PengadaanDetailPage() {
           <button
             onClick={() => terimaMutation.mutate()}
             disabled={terimaMutation.isPending}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
           >
             {terimaMutation.isPending ? 'Memproses...' : 'Konfirmasi Terima Barang'}
           </button>

@@ -63,11 +63,11 @@ export function KeuanganFormPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-            <input type="date" {...register('tanggal', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+            <input type="date" {...register('tanggal', { required: true })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Jenis</label>
-            <select {...register('jenisTransaksi')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none">
+            <select {...register('jenisTransaksi')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none">
               <option value="PENGELUARAN">Pengeluaran</option>
               <option value="PEMASUKAN">Pemasukan</option>
             </select>
@@ -75,28 +75,28 @@ export function KeuanganFormPage() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-          <select {...register('kategori')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none">
+          <select {...register('kategori')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none">
             {KATEGORI_KEUANGAN.map((k) => <option key={k} value={k}>{k}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Jumlah (Rp)</label>
-          <input type="number" min={0} {...register('jumlah', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+          <input type="number" min={0} {...register('jumlah', { required: true, min: 0 })} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
           {errors.jumlah && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Keterangan (opsional)</label>
-          <input {...register('keterangan')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+          <input {...register('keterangan')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Referensi (No. PO / dll)</label>
-          <input {...register('referensi')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
+          <input {...register('referensi')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none" />
         </div>
         {mutation.error && (
           <p className="text-red-500 text-sm">{getErrorMessage(mutation.error)}</p>
         )}
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={mutation.isPending} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50">
+          <button type="submit" disabled={mutation.isPending} className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50">
             {mutation.isPending ? 'Menyimpan...' : 'Simpan'}
           </button>
           <button type="button" onClick={() => navigate('/keuangan')} className="border border-gray-300 px-6 py-2 rounded-lg hover:bg-gray-50">Batal</button>
