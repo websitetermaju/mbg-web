@@ -5,6 +5,8 @@ import { Layout } from '@/components/Layout'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { MenuListPage } from '@/pages/menu/MenuListPage'
 import { MenuFormPage } from '@/pages/menu/MenuFormPage'
+import { BahanBakuListPage } from '@/pages/bahan-baku/BahanBakuListPage'
+import { BahanBakuFormPage } from '@/pages/bahan-baku/BahanBakuFormPage'
 
 export default function App() {
   return (
@@ -16,6 +18,9 @@ export default function App() {
           <Route path="menu" element={<MenuListPage />} />
           <Route path="menu/baru" element={<MenuFormPage />} />
           <Route path="menu/:id/edit" element={<MenuFormPage />} />
+          <Route path="bahan-baku" element={<BahanBakuListPage />} />
+          <Route path="bahan-baku/baru" element={<BahanBakuFormPage />} />
+          <Route path="bahan-baku/:id/edit" element={<BahanBakuFormPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
