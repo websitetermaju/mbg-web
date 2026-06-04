@@ -6,7 +6,7 @@ export const laporanApi = {
     api.get<ApiResponse<Laporan[]>>('/laporan', { params }),
   getOne: (id: string) => api.get<ApiResponse<Laporan>>(`/laporan/${id}`),
   create: (data: { judul: string; jenis: string; periodeMulai: string; periodeAkhir: string }) =>
-    api.post<ApiResponse<Laporan>>('/laporan', data),
+    api.post<ApiResponse<Laporan>>('/laporan/generate', data),
   review: (id: string, catatan: string) =>
     api.post<ApiResponse<Laporan>>(`/laporan/${id}/review`, { catatan }),
   submit: (id: string) =>
