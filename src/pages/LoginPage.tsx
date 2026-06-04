@@ -30,7 +30,7 @@ export function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-md p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-green-700 mb-2">MBG</h1>
+        <h1 className="text-2xl font-bold text-center text-bgn-900 mb-2">MBG</h1>
         <p className="text-center text-gray-500 mb-6">Sistem Pengelolaan Makan Bergizi Gratis</p>
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 mb-4 text-sm">
@@ -44,7 +44,7 @@ export function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-bgn-600"
               placeholder="email@sppg.id"
               required
             />
@@ -55,14 +55,14 @@ export function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-bgn-600"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white rounded-lg py-2 font-medium hover:bg-green-700 disabled:opacity-50 transition-colors"
+            className="w-full bg-bgn-900 text-white rounded-lg py-2 font-medium hover:bg-bgn-800 disabled:opacity-50 transition-colors"
           >
             {loading ? 'Memproses...' : 'Masuk'}
           </button>
