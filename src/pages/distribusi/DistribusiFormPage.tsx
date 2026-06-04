@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { distribusiApi } from '@/api/endpoints/distribusi'
+import { getErrorMessage } from '@/utils/error'
 
 interface FormData {
   produksiId: string
@@ -79,7 +80,7 @@ export function DistribusiFormPage() {
         </div>
         {mutation.error && (
           <p className="text-red-500 text-sm">
-            {String((mutation.error as any).response?.data?.message ?? 'Terjadi kesalahan')}
+            {getErrorMessage(mutation.error)}
           </p>
         )}
         <div className="flex gap-3 pt-2">

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { laporanApi } from '@/api/endpoints/laporan'
+import { getErrorMessage } from '@/utils/error'
 import type { JenisLaporan } from '@/types'
 
 interface FormData {
@@ -65,7 +66,7 @@ export function LaporanFormPage() {
           </div>
         </div>
         {mutation.error && (
-          <p className="text-red-500 text-sm">{String((mutation.error as any).response?.data?.message ?? 'Terjadi kesalahan')}</p>
+          <p className="text-red-500 text-sm">{getErrorMessage(mutation.error)}</p>
         )}
         <div className="flex gap-3 pt-2">
           <button type="submit" disabled={mutation.isPending} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50">

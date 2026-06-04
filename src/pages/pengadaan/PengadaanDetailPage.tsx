@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { pengadaanApi } from '@/api/endpoints/pengadaan'
 import { StatusBadge } from '@/components/StatusBadge'
+import { getErrorMessage } from '@/utils/error'
 
 export function PengadaanDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -136,7 +137,7 @@ export function PengadaanDetailPage() {
       </div>
 
       {terimaMutation.error && (
-        <p className="text-red-500 text-sm mt-3">{String((terimaMutation.error as any).response?.data?.message ?? 'Terjadi kesalahan')}</p>
+        <p className="text-red-500 text-sm mt-3">{getErrorMessage(terimaMutation.error)}</p>
       )}
     </div>
   )

@@ -7,7 +7,6 @@ import { Pagination } from '@/components/Pagination'
 import type { Produksi } from '@/types'
 
 function SelesaiModal({
-  item: _item,
   onClose,
   onConfirm,
 }: {

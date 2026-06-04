@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { keuanganApi } from '@/api/endpoints/keuangan'
-import type { JenisTransaksi } from '@/types'
+import { getErrorMessage } from '@/utils/error'
+import type { JenisTransaksi, Keuangan } from '@/types'
 
 interface FormData {
   tanggal: string
@@ -43,9 +44,9 @@ export function KeuanganFormPage() {
       keuanganApi.create({
         ...data,
         jumlah: Number(data.jumlah),
-        keterangan: data.keterangan || undefined,
-        referensi: data.referensi || undefined,
-      } as any),
+        keterangan: data.keterangan || null,
+        referensi: data.referensi || null,
+      } as Partial<Keuangan>),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['keuangan'] })
       navigate('/keuangan')
@@ -92,7 +93,7 @@ export function KeuanganFormPage() {
           <input {...register('referensi')} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:outline-none" />
         </div>
         {mutation.error && (
-          <p className="text-red-500 text-sm">{String((mutation.error as any).response?.data?.message ?? 'Terjadi kesalahan')}</p>
+          <p className="text-red-500 text-sm">{getErrorMessage(mutation.error)}</p>
         )}
         <div className="flex gap-3 pt-2">
           <button type="submit" disabled={mutation.isPending} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50">
