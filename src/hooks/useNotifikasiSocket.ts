@@ -17,7 +17,11 @@ export function useNotifikasiSocket() {
     })
 
     socketRef.current.on('notifikasi.baru', () => {
-      void qc.invalidateQueries({ queryKey: ['notifikasi'] })
+      void qc.invalidateQueries({ queryKey: ['notifikasi'], exact: false })
+    })
+
+    socketRef.current.on('connect_error', (err) => {
+      console.warn('[WS] Gagal terhubung:', err.message)
     })
 
     return () => {
