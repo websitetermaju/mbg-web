@@ -4,11 +4,21 @@ import { keuanganApi } from '@/api/endpoints/keuangan'
 import { useAuthStore } from '@/store/auth.store'
 import { StatusBadge } from '@/components/StatusBadge'
 
-function StatCard({ label, value, sub, warning }: { label: string; value: string | number; sub?: string; warning?: boolean }) {
+interface StatCardProps {
+  label: string
+  value: string | number
+  sub?: string
+  borderColor: string
+  icon: string
+  valueColor?: string
+}
+
+function StatCard({ label, value, sub, borderColor, icon, valueColor }: StatCardProps) {
   return (
-    <div className={`bg-white rounded-xl p-5 shadow-sm border ${warning ? 'border-red-200' : 'border-gray-100'}`}>
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className={`text-2xl font-bold mt-1 ${warning ? 'text-red-600' : 'text-gray-800'}`}>{value}</p>
+    <div className={`relative bg-white rounded-xl p-5 shadow-md border border-bgn-100 overflow-hidden ${borderColor}`}>
+      <span className="absolute top-3 right-4 text-2xl opacity-20 select-none">{icon}</span>
+      <p className="text-sm text-gray-500 font-medium">{label}</p>
+      <p className={`text-2xl font-bold mt-1 ${valueColor ?? 'text-gray-800'}`}>{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
   )
@@ -42,48 +52,65 @@ export function DashboardPage() {
   })
 
   const cost = costData?.data.data
+  const stokMenipisCount = stokMenipis?.data.meta?.total ?? 0
+  const stokHabisCount = stokHabis?.data.meta?.total ?? 0
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-1">Dashboard</h1>
-      <p className="text-gray-500 mb-6">Selamat datang, {user?.nama ?? user?.email}</p>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-bgn-900">Dashboard</h1>
+        <p className="text-gray-500 mt-1">Selamat datang, {user?.nama ?? user?.email}</p>
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatCard
           label="Stok Menipis"
-          value={stokMenipis?.data.meta?.total ?? '-'}
+          value={stokMenipisCount}
           sub="bahan baku LOW_STOCK"
-          warning={(stokMenipis?.data.meta?.total ?? 0) > 0}
+          borderColor="border-l-4 border-bgn-gold-400"
+          icon="⚠️"
+          valueColor={stokMenipisCount > 0 ? 'text-bgn-gold-600' : 'text-gray-800'}
         />
         <StatCard
           label="Stok Habis"
-          value={stokHabis?.data.meta?.total ?? '-'}
+          value={stokHabisCount}
           sub="bahan baku OUT_OF_STOCK"
-          warning={(stokHabis?.data.meta?.total ?? 0) > 0}
+          borderColor="border-l-4 border-red-400"
+          icon="🚫"
+          valueColor={stokHabisCount > 0 ? 'text-red-600' : 'text-gray-800'}
         />
-        {cost && (
+        {cost ? (
           <>
             <StatCard
               label="Cost Per Porsi"
               value={`Rp ${cost.costPerPorsi.toLocaleString('id-ID')}`}
               sub={`Pagu: Rp ${cost.pagu.toLocaleString('id-ID')}`}
-              warning={cost.melebihiPagu}
+              borderColor={cost.melebihiPagu ? 'border-l-4 border-red-400' : 'border-l-4 border-bgn-green-400'}
+              icon="💰"
+              valueColor={cost.melebihiPagu ? 'text-red-600' : 'text-bgn-green-600'}
             />
             <StatCard
               label="Total Porsi Bulan Ini"
               value={cost.totalPorsi.toLocaleString('id-ID')}
               sub="porsi diproduksi"
+              borderColor="border-l-4 border-bgn-200"
+              icon="🍱"
             />
+          </>
+        ) : (
+          <>
+            <StatCard label="Cost Per Porsi" value="Rp 0" sub="Pagu: Rp 15.000" borderColor="border-l-4 border-bgn-green-400" icon="💰" />
+            <StatCard label="Total Porsi Bulan Ini" value={0} sub="porsi diproduksi" borderColor="border-l-4 border-bgn-200" icon="🍱" />
           </>
         )}
       </div>
 
-      {(stokMenipis?.data.data.length ?? 0) > 0 && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-4">
-          <h2 className="font-semibold text-gray-700 mb-3">Bahan Baku Perlu Perhatian</h2>
+      {stokMenipisCount > 0 && (
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 p-5 mb-4">
+          <h2 className="font-semibold text-bgn-900 mb-3">Bahan Baku Perlu Perhatian</h2>
           <div className="space-y-2">
             {stokMenipis?.data.data.map((b) => (
-              <div key={b.id} className="flex items-center justify-between text-sm">
+              <div key={b.id} className="flex items-center justify-between text-sm py-1 border-b border-bgn-50 last:border-0">
                 <span className="text-gray-700">{b.nama}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">{b.stokAkhir} {b.satuan}</span>
