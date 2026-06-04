@@ -1,5 +1,7 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
+import { useQuery } from '@tanstack/react-query'
+import { notifikasiApi } from '@/api/endpoints/notifikasi'
 
 const navItems = [
   { to: '/', label: 'Dashboard' },
@@ -17,6 +19,13 @@ export function Layout() {
   const { user, logout } = useAuthStore()
   const navigate = useNavigate()
 
+  const { data: unreadData } = useQuery({
+    queryKey: ['notifikasi', 'unread-count'],
+    queryFn: notifikasiApi.unreadCount,
+    refetchInterval: 30_000,
+  })
+  const unreadCount = unreadData?.data.data.count ?? 0
+
   const handleLogout = () => {
     logout()
     navigate('/login')
@@ -32,15 +41,30 @@ export function Layout() {
           <p className="text-xs text-green-300">{user?.role}</p>
         </div>
         <nav className="flex-1 py-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="block px-4 py-2 text-sm hover:bg-green-600 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.label === 'Notifikasi' ? (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="flex items-center justify-between px-4 py-2 text-sm hover:bg-green-600 transition-colors"
+              >
+                <span>{item.label}</span>
+                {unreadCount > 0 && (
+                  <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                )}
+              </Link>
+            ) : (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="block px-4 py-2 text-sm hover:bg-green-600 transition-colors"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
         <button
           onClick={handleLogout}

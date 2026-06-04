@@ -18,6 +18,7 @@ import { KeuanganListPage } from '@/pages/keuangan/KeuanganListPage'
 import { KeuanganFormPage } from '@/pages/keuangan/KeuanganFormPage'
 import { LaporanListPage } from '@/pages/laporan/LaporanListPage'
 import { LaporanFormPage } from '@/pages/laporan/LaporanFormPage'
+import { NotifikasiPage } from '@/pages/notifikasi/NotifikasiPage'
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="keuangan/baru" element={<KeuanganFormPage />} />
           <Route path="laporan" element={<LaporanListPage />} />
           <Route path="laporan/baru" element={<LaporanFormPage />} />
+          <Route path="notifikasi" element={<NotifikasiPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
