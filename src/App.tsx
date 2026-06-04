@@ -9,6 +9,7 @@ import { BahanBakuListPage } from '@/pages/bahan-baku/BahanBakuListPage'
 import { BahanBakuFormPage } from '@/pages/bahan-baku/BahanBakuFormPage'
 import { PengadaanListPage } from '@/pages/pengadaan/PengadaanListPage'
 import { PengadaanFormPage } from '@/pages/pengadaan/PengadaanFormPage'
+import { PengadaanDetailPage } from '@/pages/pengadaan/PengadaanDetailPage'
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
           <Route path="bahan-baku/:id/edit" element={<BahanBakuFormPage />} />
           <Route path="pengadaan" element={<PengadaanListPage />} />
           <Route path="pengadaan/baru" element={<PengadaanFormPage />} />
-          <Route path="pengadaan/:id" element={<PengadaanListPage />} />
+          <Route path="pengadaan/:id" element={<PengadaanDetailPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
