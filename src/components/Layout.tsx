@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { useQuery } from '@tanstack/react-query'
 import { notifikasiApi } from '@/api/endpoints/notifikasi'
+import { useNotifikasiSocket } from '@/hooks/useNotifikasiSocket'
 
 const navItems = [
   { to: '/', label: 'Dashboard' },
@@ -18,6 +19,7 @@ const navItems = [
 export function Layout() {
   const { user, logout } = useAuthStore()
   const navigate = useNavigate()
+  useNotifikasiSocket()
 
   const { data: unreadData } = useQuery({
     queryKey: ['notifikasi', 'unread-count'],
