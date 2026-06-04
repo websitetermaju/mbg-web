@@ -35,7 +35,7 @@ export function MenuListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Menu Harian</h1>
         <Link
           to="/menu/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Buat Menu
         </Link>
@@ -44,21 +44,21 @@ export function MenuListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Nama Menu</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Tanggal</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Penerima</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Porsi</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Nama Menu</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Tanggal</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Penerima</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Porsi</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Status</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((m) => (
-                <tr key={m.id} className="hover:bg-gray-50">
+                <tr key={m.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 font-medium text-gray-800">{m.namaMenu}</td>
                   <td className="px-4 py-3 text-gray-600">{m.tanggal}</td>
                   <td className="px-4 py-3 text-gray-600">{m.jenisPenerima}</td>

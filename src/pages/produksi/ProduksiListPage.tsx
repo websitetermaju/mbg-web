@@ -30,7 +30,7 @@ function SelesaiModal({
               min={0}
               value={porsiDiproduksi}
               onChange={(e) => setPorsiDiproduksi(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
           </div>
           <div>
@@ -40,7 +40,7 @@ function SelesaiModal({
               min={0}
               value={porsiGagal}
               onChange={(e) => setPorsiGagal(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
           </div>
           <div>
@@ -49,7 +49,7 @@ function SelesaiModal({
               value={catatan}
               onChange={(e) => setCatatan(e.target.value)}
               rows={2}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
           </div>
         </div>
@@ -57,7 +57,7 @@ function SelesaiModal({
           <button
             onClick={() => onConfirm(porsiDiproduksi, porsiGagal, catatan)}
             disabled={porsiDiproduksi <= 0}
-            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+            className="flex-1 bg-bgn-green-400 text-white py-2 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -109,7 +109,7 @@ export function ProduksiListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Produksi</h1>
         <Link
           to="/produksi/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Buat Produksi
         </Link>
@@ -118,22 +118,22 @@ export function ProduksiListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Tanggal</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Menu ID</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Porsi</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Gagal</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Waktu Mulai</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Tanggal</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Menu ID</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Status</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Porsi</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Gagal</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Waktu Mulai</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((p) => (
-                <tr key={p.id} className="hover:bg-gray-50">
+                <tr key={p.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 text-gray-600">{p.tanggal}</td>
                   <td className="px-4 py-3 text-gray-500 font-mono text-xs">{p.menuId.slice(0, 8)}...</td>
                   <td className="px-4 py-3"><StatusBadge status={p.status} /></td>

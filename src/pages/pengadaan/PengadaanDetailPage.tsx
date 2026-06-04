@@ -57,20 +57,20 @@ export function PengadaanDetailPage() {
         <StatusBadge status={po.status} />
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-4">
+      <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden mb-4">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50">
+          <thead className="bg-bgn-200">
             <tr>
-              <th className="text-left px-4 py-3 text-gray-600 font-medium">ID Bahan Baku</th>
-              <th className="text-right px-4 py-3 text-gray-600 font-medium">Jumlah</th>
-              <th className="text-right px-4 py-3 text-gray-600 font-medium">Harga Satuan</th>
-              <th className="text-right px-4 py-3 text-gray-600 font-medium">Subtotal</th>
+              <th className="text-left px-4 py-3 text-bgn-900 font-semibold">ID Bahan Baku</th>
+              <th className="text-right px-4 py-3 text-bgn-900 font-semibold">Jumlah</th>
+              <th className="text-right px-4 py-3 text-bgn-900 font-semibold">Harga Satuan</th>
+              <th className="text-right px-4 py-3 text-bgn-900 font-semibold">Subtotal</th>
               {isOrdered && (
-                <th className="text-right px-4 py-3 text-gray-600 font-medium">Diterima</th>
+                <th className="text-right px-4 py-3 text-bgn-900 font-semibold">Diterima</th>
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-bgn-100">
             {po.items.map((item) => (
               <tr key={item.id}>
                 <td className="px-4 py-3 text-gray-600 font-mono text-xs">{item.bahanBakuId}</td>
@@ -90,7 +90,7 @@ export function PengadaanDetailPage() {
                           [item.id]: Number(e.target.value),
                         }))
                       }
-                      className="w-20 border border-gray-300 rounded px-2 py-1 text-right focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+                      className="w-20 border border-gray-300 rounded px-2 py-1 text-right focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
                     />
                   </td>
                 )}
@@ -114,7 +114,7 @@ export function PengadaanDetailPage() {
           <button
             onClick={() => terimaMutation.mutate()}
             disabled={terimaMutation.isPending}
-            className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+            className="bg-bgn-green-400 text-white px-6 py-2 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50"
           >
             {terimaMutation.isPending ? 'Memproses...' : 'Konfirmasi Terima Barang'}
           </button>

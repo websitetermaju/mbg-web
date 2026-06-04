@@ -60,7 +60,7 @@ export function LaporanListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Laporan</h1>
         <Link
           to="/laporan/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Generate Laporan
         </Link>
@@ -69,20 +69,20 @@ export function LaporanListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Judul</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Jenis</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Periode</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Judul</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Jenis</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Periode</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Status</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((l) => (
-                <tr key={l.id} className="hover:bg-gray-50">
+                <tr key={l.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 font-medium text-gray-800">{l.judul}</td>
                   <td className="px-4 py-3 text-gray-600">{l.jenis}</td>
                   <td className="px-4 py-3 text-gray-500 text-xs">

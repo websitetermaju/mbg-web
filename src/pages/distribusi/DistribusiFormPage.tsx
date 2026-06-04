@@ -45,7 +45,7 @@ export function DistribusiFormPage() {
           <input
             {...register('produksiId', { required: true })}
             placeholder="UUID produksi"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none font-mono text-sm"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none font-mono text-sm"
           />
           {errors.produksiId && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
         </div>
@@ -55,7 +55,7 @@ export function DistribusiFormPage() {
             <input
               type="date"
               {...register('tanggal', { required: true })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
             {errors.tanggal && <p className="text-red-500 text-xs mt-1">Wajib diisi</p>}
           </div>
@@ -65,7 +65,7 @@ export function DistribusiFormPage() {
               type="number"
               min={1}
               {...register('jumlahPorsi', { required: true, min: 1 })}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
             {errors.jumlahPorsi && <p className="text-red-500 text-xs mt-1">Min 1 porsi</p>}
           </div>
@@ -75,7 +75,7 @@ export function DistribusiFormPage() {
           <textarea
             {...register('keterangan')}
             rows={2}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
           />
         </div>
         {mutation.error && (
@@ -87,7 +87,7 @@ export function DistribusiFormPage() {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="bg-bgn-900 text-white px-6 py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+            className="bg-bgn-green-400 text-white px-6 py-2 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50"
           >
             {mutation.isPending ? 'Menyimpan...' : 'Buat Distribusi'}
           </button>

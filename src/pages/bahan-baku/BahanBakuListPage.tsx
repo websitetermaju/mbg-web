@@ -29,7 +29,7 @@ function TambahStokModal({
               min={1}
               value={jumlah}
               onChange={(e) => setJumlah(Number(e.target.value))}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
             />
           </div>
           <div>
@@ -37,7 +37,7 @@ function TambahStokModal({
             <input
               value={referensi}
               onChange={(e) => setReferensi(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
               placeholder="Opsional"
             />
           </div>
@@ -46,7 +46,7 @@ function TambahStokModal({
           <button
             onClick={() => onConfirm(jumlah, referensi)}
             disabled={jumlah <= 0}
-            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+            className="flex-1 bg-bgn-green-400 text-white py-2 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -92,7 +92,7 @@ export function BahanBakuListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Bahan Baku</h1>
         <Link
           to="/bahan-baku/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Tambah Bahan
         </Link>
@@ -101,22 +101,22 @@ export function BahanBakuListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Nama</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Satuan</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Stok Akhir</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Stok Min</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Harga/Satuan</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Nama</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Satuan</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Stok Akhir</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Stok Min</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Status</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Harga/Satuan</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((b) => (
-                <tr key={b.id} className="hover:bg-gray-50">
+                <tr key={b.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 font-medium text-gray-800">{b.nama}</td>
                   <td className="px-4 py-3 text-gray-600">{b.satuan}</td>
                   <td className="px-4 py-3 text-gray-600">{b.stokAkhir}</td>

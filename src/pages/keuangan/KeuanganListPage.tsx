@@ -36,7 +36,7 @@ export function KeuanganListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Keuangan</h1>
         <Link
           to="/keuangan/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Catat Transaksi
         </Link>
@@ -62,7 +62,7 @@ export function KeuanganListPage() {
             onClick={() => setFilterJenis(j)}
             className={`px-3 py-1 rounded-full text-sm border transition-colors ${
               filterJenis === j
-                ? 'bg-bgn-900 text-white border-bgn-800'
+                ? 'bg-bgn-green-400 text-white border-bgn-800'
                 : 'border-gray-300 text-gray-600 hover:border-bgn-600'
             }`}
           >
@@ -74,21 +74,21 @@ export function KeuanganListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Tanggal</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Jenis</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Kategori</th>
-                <th className="text-right px-4 py-3 text-gray-600 font-medium">Jumlah</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Keterangan</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Tanggal</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Jenis</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Kategori</th>
+                <th className="text-right px-4 py-3 text-bgn-900 font-semibold">Jumlah</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Keterangan</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((k) => (
-                <tr key={k.id} className="hover:bg-gray-50">
+                <tr key={k.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 text-gray-600">{k.tanggal}</td>
                   <td className="px-4 py-3">
                     <span

@@ -32,7 +32,7 @@ function DeliverModal({
           <button
             onClick={() => file && onConfirm(file)}
             disabled={!file}
-            className="flex-1 bg-bgn-900 text-white py-2 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+            className="flex-1 bg-bgn-green-400 text-white py-2 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50"
           >
             Konfirmasi
           </button>
@@ -65,7 +65,7 @@ function GagalModal({
             onChange={(e) => setAlasan(e.target.value)}
             rows={3}
             placeholder="Jelaskan alasan distribusi gagal..."
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-600 focus:outline-none"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
           />
         </div>
         <div className="flex gap-2">
@@ -131,7 +131,7 @@ export function DistribusiListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Distribusi</h1>
         <Link
           to="/distribusi/baru"
-          className="bg-bgn-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-900"
+          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
         >
           + Buat Distribusi
         </Link>
@@ -140,21 +140,21 @@ export function DistribusiListPage() {
       {isLoading ? (
         <p className="text-gray-500">Memuat...</p>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-bgn-200">
               <tr>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Tanggal</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Produksi</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Porsi</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Status</th>
-                <th className="text-left px-4 py-3 text-gray-600 font-medium">Terlambat</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Tanggal</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Produksi</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Porsi</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Status</th>
+                <th className="text-left px-4 py-3 text-bgn-900 font-semibold">Terlambat</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-bgn-100">
               {items.map((d) => (
-                <tr key={d.id} className="hover:bg-gray-50">
+                <tr key={d.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
                   <td className="px-4 py-3 text-gray-600">{d.tanggal}</td>
                   <td className="px-4 py-3 text-gray-500 font-mono text-xs">{d.produksiId.slice(0, 8)}...</td>
                   <td className="px-4 py-3 text-gray-600">{d.jumlahPorsi}</td>
