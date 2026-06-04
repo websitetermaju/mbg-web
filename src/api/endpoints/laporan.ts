@@ -16,4 +16,9 @@ export const laporanApi = {
   reject: (id: string, catatan: string) =>
     api.patch<ApiResponse<Laporan>>(`/laporan/${id}/reject`, { catatan }),
   delete: (id: string) => api.delete(`/laporan/${id}`),
+  export: (id: string, format: 'pdf' | 'excel') =>
+    api.get<Blob>(`/laporan/${id}/export`, {
+      params: { format },
+      responseType: 'blob',
+    }),
 }

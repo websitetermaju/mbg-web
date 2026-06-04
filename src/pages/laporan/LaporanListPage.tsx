@@ -29,6 +29,23 @@ export function LaporanListPage() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['laporan'] }),
   })
 
+  const [exporting, setExporting] = useState<string | null>(null)
+
+  const handleExport = async (id: string, format: 'pdf' | 'excel') => {
+    try {
+      setExporting(id + format)
+      const res = await laporanApi.export(id, format)
+      const url = URL.createObjectURL(res.data)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `laporan-${id}.${format === 'pdf' ? 'pdf' : 'xlsx'}`
+      a.click()
+      URL.revokeObjectURL(url)
+    } finally {
+      setExporting(null)
+    }
+  }
+
   const items = data?.data.data ?? []
   const meta = data?.data.meta
 
@@ -69,6 +86,20 @@ export function LaporanListPage() {
                   <td className="px-4 py-3"><StatusBadge status={l.status} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 justify-end">
+                      <button
+                        onClick={() => { void handleExport(l.id, 'excel') }}
+                        disabled={exporting === l.id + 'excel'}
+                        className="text-green-600 hover:underline text-xs"
+                      >
+                        {exporting === l.id + 'excel' ? '...' : 'Excel'}
+                      </button>
+                      <button
+                        onClick={() => { void handleExport(l.id, 'pdf') }}
+                        disabled={exporting === l.id + 'pdf'}
+                        className="text-red-600 hover:underline text-xs"
+                      >
+                        {exporting === l.id + 'pdf' ? '...' : 'PDF'}
+                      </button>
                       {l.status === 'REVIEWED' && (
                         <button
                           onClick={() => submitMutation.mutate(l.id)}
