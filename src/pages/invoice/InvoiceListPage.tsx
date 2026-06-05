@@ -20,7 +20,7 @@ export function InvoiceListPage() {
   })
 
   const items = invoiceData?.data.data ?? []
-  const meta = (invoiceData?.data as { meta?: { totalPages: number } }).meta
+  const meta = invoiceData?.data.meta
 
   return (
     <div>
