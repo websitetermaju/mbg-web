@@ -98,6 +98,9 @@ export interface Produksi {
   waktuSelesai: string | null
   catatan: string | null
   needReview: boolean
+  totalBiaya: number
+  costPerPorsi: number
+  qcSelesai: boolean
   sppgId: string
 }
 
@@ -219,4 +222,61 @@ export interface Invoice {
   pembayaran: Pembayaran[]
   createdAt: string
   updatedAt: string
+}
+
+// ─── Stok Batch ───────────────────────────────────────────────────
+export interface StokBatch {
+  id: string
+  sppgId: string
+  bahanBakuId: string
+  bahanBaku?: { nama: string; satuan: string }
+  pengadaanId: string | null
+  lokasiId: string | null
+  lokasi?: { nama: string; tipe: string } | null
+  jumlahMasuk: number
+  jumlahTersisa: number
+  tanggalMasuk: string
+  tanggalKadaluarsa: string | null
+  hargaSatuan: number
+  catatan: string | null
+  createdAt: string
+}
+
+// ─── Biaya Produksi ───────────────────────────────────────────────
+export type KategoriBiaya = 'BAHAN_BAKU' | 'UPAH' | 'UTILITAS' | 'LAINNYA'
+
+export interface BiayaProduksiItem {
+  id: string
+  produksiId: string
+  sppgId: string
+  kategori: KategoriBiaya
+  deskripsi: string
+  jumlah: number
+  createdAt: string
+}
+
+export interface BiayaSummary {
+  items: BiayaProduksiItem[]
+  totalBiaya: number
+  costPerPorsi: number
+}
+
+// ─── QC ───────────────────────────────────────────────────────────
+export interface QcTemplateItem {
+  id: string
+  sppgId: string
+  namaCheck: string
+  urutan: number
+  isActive: boolean
+}
+
+export interface QcHasil {
+  id: string
+  produksiId: string
+  templateItemId: string
+  templateItem?: QcTemplateItem
+  passed: boolean
+  catatan: string | null
+  checkedById: string | null
+  checkedAt: string | null
 }
