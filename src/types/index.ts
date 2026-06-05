@@ -358,3 +358,28 @@ export interface LokasiGudang {
   isActive: boolean
   createdAt: string
 }
+
+// ─── Stock Opname ──────────────────────────────────────────────────────
+export type StatusOpname = 'DRAFT' | 'FINALIZED'
+
+export interface StockOpnameItem {
+  id: string
+  opnameId: string
+  bahanBakuId: string
+  bahanBaku?: { nama: string; satuan: string }
+  stokSistem: number
+  jumlahFisik: number | null
+  selisih?: number | null
+  catatan: string | null
+}
+
+export interface StockOpname {
+  id: string
+  sppgId: string
+  tanggal: string
+  catatan: string | null
+  status: StatusOpname
+  finalizedAt: string | null
+  items: StockOpnameItem[]
+  createdAt: string
+}

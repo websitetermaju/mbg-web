@@ -32,6 +32,8 @@ import { ResepListPage } from '@/pages/resep/ResepListPage'
 import { ResepFormPage } from '@/pages/resep/ResepFormPage'
 import { ResepDetailPage } from '@/pages/resep/ResepDetailPage'
 import { LokasiGudangPage } from '@/pages/lokasi-gudang/LokasiGudangPage'
+import { StockOpnamePage } from '@/pages/stock-opname/StockOpnamePage'
+import { StockOpnameDetailPage } from '@/pages/stock-opname/StockOpnameDetailPage'
 
 export default function App() {
   return (
@@ -62,6 +64,8 @@ export default function App() {
           <Route path="resep/baru" element={<ResepFormPage />} />
           <Route path="resep/:id" element={<ResepDetailPage />} />
           <Route path="lokasi-gudang" element={<LokasiGudangPage />} />
+          <Route path="stock-opname" element={<StockOpnamePage />} />
+          <Route path="stock-opname/:id" element={<StockOpnameDetailPage />} />
           <Route path="produksi" element={<ProduksiListPage />} />
           <Route path="produksi/baru" element={<ProduksiFormPage />} />
           <Route path="produksi/:id" element={<ProduksiDetailPage />} />

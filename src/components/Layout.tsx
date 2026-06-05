@@ -14,6 +14,7 @@ const navItems = [
   { to: '/supplier', label: 'Supplier' },
   { to: '/resep', label: 'Resep / BOM' },
   { to: '/lokasi-gudang', label: 'Lokasi Gudang' },
+  { to: '/stock-opname', label: 'Stock Opname' },
   { to: '/produksi', label: 'Produksi' },
   { to: '/distribusi', label: 'Distribusi' },
   { to: '/keuangan', label: 'Keuangan' },
