@@ -26,6 +26,12 @@ import { PRFormPage } from '@/pages/permintaan-pembelian/PRFormPage'
 import { PRDetailPage } from '@/pages/permintaan-pembelian/PRDetailPage'
 import { InvoiceListPage } from '@/pages/invoice/InvoiceListPage'
 import { InvoiceDetailPage } from '@/pages/invoice/InvoiceDetailPage'
+import { SupplierListPage } from '@/pages/supplier/SupplierListPage'
+import { SupplierFormPage } from '@/pages/supplier/SupplierFormPage'
+import { ResepListPage } from '@/pages/resep/ResepListPage'
+import { ResepFormPage } from '@/pages/resep/ResepFormPage'
+import { ResepDetailPage } from '@/pages/resep/ResepDetailPage'
+import { LokasiGudangPage } from '@/pages/lokasi-gudang/LokasiGudangPage'
 
 export default function App() {
   return (
@@ -49,6 +55,13 @@ export default function App() {
           <Route path="permintaan-pembelian/:id" element={<PRDetailPage />} />
           <Route path="invoice" element={<InvoiceListPage />} />
           <Route path="invoice/:id" element={<InvoiceDetailPage />} />
+          <Route path="supplier" element={<SupplierListPage />} />
+          <Route path="supplier/baru" element={<SupplierFormPage />} />
+          <Route path="supplier/:id/edit" element={<SupplierFormPage />} />
+          <Route path="resep" element={<ResepListPage />} />
+          <Route path="resep/baru" element={<ResepFormPage />} />
+          <Route path="resep/:id" element={<ResepDetailPage />} />
+          <Route path="lokasi-gudang" element={<LokasiGudangPage />} />
           <Route path="produksi" element={<ProduksiListPage />} />
           <Route path="produksi/baru" element={<ProduksiFormPage />} />
           <Route path="produksi/:id" element={<ProduksiDetailPage />} />
