@@ -280,3 +280,81 @@ export interface QcHasil {
   checkedById: string | null
   checkedAt: string | null
 }
+
+// ─── Supplier ─────────────────────────────────────────────────────
+export type JenisUsaha = 'PT' | 'CV' | 'KOPERASI' | 'UMKM' | 'PERORANGAN'
+export type KategoriSupplier = 'BAHAN_SEGAR' | 'BAHAN_KERING' | 'BUMBU_REMPAH' | 'KEMASAN' | 'LAINNYA'
+export type TerminBayar = 'COD' | 'NET_7' | 'NET_14' | 'NET_30'
+
+export interface Supplier {
+  id: string
+  sppgId: string
+  nama: string
+  jenisUsaha: JenisUsaha
+  npwp: string | null
+  namaPic: string
+  telepon: string
+  email: string | null
+  alamat: string | null
+  kota: string | null
+  namaBank: string | null
+  noRekening: string | null
+  atasNama: string | null
+  terminBayar: TerminBayar
+  kategori: KategoriSupplier
+  minOrder: number | null
+  leadTime: number | null
+  catatan: string | null
+  isActive: boolean
+  createdAt: string
+}
+
+// ─── Resep ────────────────────────────────────────────────────────
+export interface ResepItem {
+  id: string
+  resepId: string
+  bahanBakuId: string
+  bahanBaku?: { nama: string; satuan: string }
+  jumlahPerPorsi: number
+  catatan: string | null
+}
+
+export interface Resep {
+  id: string
+  sppgId: string
+  nama: string
+  jenisPenerima: JenisPenerima
+  deskripsi: string | null
+  isActive: boolean
+  items: ResepItem[]
+  createdAt: string
+}
+
+export interface KebutuhanBahan {
+  bahanBakuId: string
+  nama: string
+  satuan: string
+  jumlahPerPorsi: number
+  kebutuhan: number
+  stokTersedia: number
+  cukup: boolean
+}
+
+export interface PreviewKebutuhan {
+  jumlahPorsi: number
+  items: KebutuhanBahan[]
+  semuaCukup: boolean
+}
+
+// ─── Lokasi Gudang ────────────────────────────────────────────────
+export type TipeLokasiGudang = 'KERING' | 'DINGIN' | 'BEKU'
+
+export interface LokasiGudang {
+  id: string
+  sppgId: string
+  nama: string
+  tipe: TipeLokasiGudang
+  keterangan: string | null
+  isActive: boolean
+  createdAt: string
+}
