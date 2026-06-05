@@ -9,6 +9,8 @@ const navItems = [
   { to: '/menu', label: 'Menu Harian' },
   { to: '/bahan-baku', label: 'Bahan Baku' },
   { to: '/pengadaan', label: 'Pengadaan' },
+  { to: '/permintaan-pembelian', label: 'Permintaan Beli' },
+  { to: '/invoice', label: 'Invoice' },
   { to: '/produksi', label: 'Produksi' },
   { to: '/distribusi', label: 'Distribusi' },
   { to: '/keuangan', label: 'Keuangan' },

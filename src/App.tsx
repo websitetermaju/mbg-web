@@ -19,6 +19,11 @@ import { KeuanganFormPage } from '@/pages/keuangan/KeuanganFormPage'
 import { LaporanListPage } from '@/pages/laporan/LaporanListPage'
 import { LaporanFormPage } from '@/pages/laporan/LaporanFormPage'
 import { NotifikasiPage } from '@/pages/notifikasi/NotifikasiPage'
+import { PRListPage } from '@/pages/permintaan-pembelian/PRListPage'
+import { PRFormPage } from '@/pages/permintaan-pembelian/PRFormPage'
+import { PRDetailPage } from '@/pages/permintaan-pembelian/PRDetailPage'
+import { InvoiceListPage } from '@/pages/invoice/InvoiceListPage'
+import { InvoiceDetailPage } from '@/pages/invoice/InvoiceDetailPage'
 
 export default function App() {
   return (
@@ -36,6 +41,11 @@ export default function App() {
           <Route path="pengadaan" element={<PengadaanListPage />} />
           <Route path="pengadaan/baru" element={<PengadaanFormPage />} />
           <Route path="pengadaan/:id" element={<PengadaanDetailPage />} />
+          <Route path="permintaan-pembelian" element={<PRListPage />} />
+          <Route path="permintaan-pembelian/baru" element={<PRFormPage />} />
+          <Route path="permintaan-pembelian/:id" element={<PRDetailPage />} />
+          <Route path="invoice" element={<InvoiceListPage />} />
+          <Route path="invoice/:id" element={<InvoiceDetailPage />} />
           <Route path="produksi" element={<ProduksiListPage />} />
           <Route path="produksi/baru" element={<ProduksiFormPage />} />
           <Route path="produksi/:id" element={<ProduksiListPage />} />

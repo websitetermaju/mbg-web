@@ -1,7 +1,8 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { pengadaanApi } from '@/api/endpoints/pengadaan'
+import { invoiceApi } from '@/api/endpoints/invoice'
 import { StatusBadge } from '@/components/StatusBadge'
 import { getErrorMessage } from '@/utils/error'
 
@@ -16,6 +17,13 @@ export function PengadaanDetailPage() {
     queryFn: () => pengadaanApi.getOne(id!),
     enabled: !!id,
   })
+
+  const { data: invoiceData } = useQuery({
+    queryKey: ['invoice', 'by-po', id],
+    queryFn: () => invoiceApi.list({ pengadaanId: id! }),
+    enabled: !!id,
+  })
+  const invoice = invoiceData?.data.data?.[0]
 
   const terimaMutation = useMutation({
     mutationFn: () =>
@@ -56,6 +64,31 @@ export function PengadaanDetailPage() {
         </div>
         <StatusBadge status={po.status} />
       </div>
+
+      {/* Link PR sumber */}
+      {po.permintaanPembelianId && (
+        <div className="text-sm text-gray-600 mb-2">
+          📋 Dari PR:{' '}
+          <Link to={`/permintaan-pembelian/${po.permintaanPembelianId}`} className="text-bgn-800 hover:underline font-medium">
+            Lihat Permintaan Pembelian
+          </Link>
+        </div>
+      )}
+      {/* Link Invoice */}
+      {invoice && (
+        <div className="text-sm text-gray-600 mb-4">
+          🧾 Invoice:{' '}
+          <Link to={`/invoice/${invoice.id}`} className="text-bgn-800 hover:underline font-medium">
+            {invoice.nomorInvoice}
+          </Link>
+          {' — '}
+          <span className={invoice.status === 'OVERDUE' ? 'text-red-600 font-semibold' : invoice.status === 'PAID' ? 'text-bgn-green-700' : 'text-orange-600'}>
+            {invoice.status}
+          </span>
+          {' '}
+          <span className="text-gray-500">Rp {Number(invoice.totalDibayar).toLocaleString('id-ID')} / {Number(invoice.totalTagihan).toLocaleString('id-ID')}</span>
+        </div>
+      )}
 
       <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden mb-4">
         <table className="w-full text-sm">
