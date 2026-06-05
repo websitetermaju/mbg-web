@@ -117,7 +117,11 @@ export function BahanBakuListPage() {
             <tbody className="divide-y divide-bgn-100">
               {items.map((b) => (
                 <tr key={b.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
-                  <td className="px-4 py-3 font-medium text-gray-800">{b.nama}</td>
+                  <td className="px-4 py-3 font-medium text-gray-800">
+                    <Link to={`/bahan-baku/${b.id}`} className="text-bgn-800 hover:underline font-medium">
+                      {b.nama}
+                    </Link>
+                  </td>
                   <td className="px-4 py-3 text-gray-600">{b.satuan}</td>
                   <td className="px-4 py-3 text-gray-600">{b.stokAkhir}</td>
                   <td className="px-4 py-3 text-gray-600">{b.stokMinimum}</td>

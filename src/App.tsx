@@ -10,8 +10,10 @@ import { BahanBakuFormPage } from '@/pages/bahan-baku/BahanBakuFormPage'
 import { PengadaanListPage } from '@/pages/pengadaan/PengadaanListPage'
 import { PengadaanFormPage } from '@/pages/pengadaan/PengadaanFormPage'
 import { PengadaanDetailPage } from '@/pages/pengadaan/PengadaanDetailPage'
+import { BahanBakuDetailPage } from '@/pages/bahan-baku/BahanBakuDetailPage'
 import { ProduksiListPage } from '@/pages/produksi/ProduksiListPage'
 import { ProduksiFormPage } from '@/pages/produksi/ProduksiFormPage'
+import { ProduksiDetailPage } from '@/pages/produksi/ProduksiDetailPage'
 import { DistribusiListPage } from '@/pages/distribusi/DistribusiListPage'
 import { DistribusiFormPage } from '@/pages/distribusi/DistribusiFormPage'
 import { KeuanganListPage } from '@/pages/keuangan/KeuanganListPage'
@@ -38,6 +40,7 @@ export default function App() {
           <Route path="bahan-baku" element={<BahanBakuListPage />} />
           <Route path="bahan-baku/baru" element={<BahanBakuFormPage />} />
           <Route path="bahan-baku/:id/edit" element={<BahanBakuFormPage />} />
+          <Route path="bahan-baku/:id" element={<BahanBakuDetailPage />} />
           <Route path="pengadaan" element={<PengadaanListPage />} />
           <Route path="pengadaan/baru" element={<PengadaanFormPage />} />
           <Route path="pengadaan/:id" element={<PengadaanDetailPage />} />
@@ -48,7 +51,7 @@ export default function App() {
           <Route path="invoice/:id" element={<InvoiceDetailPage />} />
           <Route path="produksi" element={<ProduksiListPage />} />
           <Route path="produksi/baru" element={<ProduksiFormPage />} />
-          <Route path="produksi/:id" element={<ProduksiListPage />} />
+          <Route path="produksi/:id" element={<ProduksiDetailPage />} />
           <Route path="distribusi" element={<DistribusiListPage />} />
           <Route path="distribusi/baru" element={<DistribusiFormPage />} />
           <Route path="distribusi/:id" element={<DistribusiListPage />} />

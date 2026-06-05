@@ -134,7 +134,11 @@ export function ProduksiListPage() {
             <tbody className="divide-y divide-bgn-100">
               {items.map((p) => (
                 <tr key={p.id} className="odd:bg-white even:bg-bgn-50 hover:bg-bgn-100 transition-colors">
-                  <td className="px-4 py-3 text-gray-600">{p.tanggal}</td>
+                  <td className="px-4 py-3 text-gray-600">
+                    <Link to={`/produksi/${p.id}`} className="text-bgn-800 hover:underline font-medium">
+                      Produksi {p.tanggal}
+                    </Link>
+                  </td>
                   <td className="px-4 py-3 text-gray-500 font-mono text-xs">{p.menuId.slice(0, 8)}...</td>
                   <td className="px-4 py-3"><StatusBadge status={p.status} /></td>
                   <td className="px-4 py-3 text-gray-600">{p.porsiDiproduksi}</td>
