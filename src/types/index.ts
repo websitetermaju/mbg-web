@@ -383,3 +383,28 @@ export interface StockOpname {
   items: StockOpnameItem[]
   createdAt: string
 }
+
+// ─── SOP ──────────────────────────────────────────────────────────
+export type StatusSopStep = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
+
+export interface SopTemplateStep {
+  id: string
+  sppgId: string
+  namaTahap: string
+  deskripsi: string | null
+  urutan: number
+  estimasiMenit: number | null
+  isActive: boolean
+}
+
+export interface SopProduksiStep {
+  id: string
+  produksiId: string
+  templateStepId: string
+  templateStep?: SopTemplateStep
+  status: StatusSopStep
+  waktuMulai: string | null
+  waktuSelesai: string | null
+  catatan: string | null
+  checkedById: string | null
+}

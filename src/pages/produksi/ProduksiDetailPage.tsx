@@ -4,9 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { produksiApi } from '@/api/endpoints/produksi'
 import { biayaApi } from '@/api/endpoints/biaya-produksi'
 import { qcApi } from '@/api/endpoints/qc'
+import { sopApi } from '@/api/endpoints/sop'
 import { StatusBadge } from '@/components/StatusBadge'
 import { getErrorMessage } from '@/utils/error'
-import type { KategoriBiaya } from '@/types'
+import type { KategoriBiaya, SopProduksiStep } from '@/types'
 
 const formatRp = (n: number) => `Rp ${Number(n).toLocaleString('id-ID')}`
 
@@ -44,6 +45,13 @@ export function ProduksiDetailPage() {
     enabled: !!id,
   })
 
+  const { data: sopData, refetch: refetchSop } = useQuery({
+    queryKey: ['sop-produksi', id],
+    queryFn: () => sopApi.getSteps(id!),
+    enabled: !!id,
+  })
+  const sopSteps = sopData?.data.data ?? []
+
   const tambahBiayaMutation = useMutation({
     mutationFn: () => biayaApi.tambah(id!, { kategori: biayaKategori, deskripsi: biayaDeskripsi, jumlah: parseFloat(biayaJumlah) }),
     onSuccess: () => {
@@ -78,6 +86,18 @@ export function ProduksiDetailPage() {
       qc.invalidateQueries({ queryKey: ['produksi', id] })
       void refetchQc()
     },
+    onError: (err) => setError(getErrorMessage(err)),
+  })
+
+  const mulaiSopMutation = useMutation({
+    mutationFn: (stepId: string) => sopApi.mulaiStep(id!, stepId),
+    onSuccess: () => void refetchSop(),
+    onError: (err) => setError(getErrorMessage(err)),
+  })
+
+  const selesaiSopMutation = useMutation({
+    mutationFn: (stepId: string) => sopApi.selesaiStep(id!, stepId),
+    onSuccess: () => void refetchSop(),
     onError: (err) => setError(getErrorMessage(err)),
   })
 
@@ -254,6 +274,59 @@ export function ProduksiDetailPage() {
           </div>
         )}
       </div>
+
+      {/* Section SOP */}
+      {sopSteps.length > 0 && (
+        <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden mt-4">
+          <div className="px-5 py-4 border-b border-bgn-100">
+            <h2 className="font-semibold text-bgn-900">Tahapan SOP Produksi</h2>
+            <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
+              <span>{sopSteps.filter((s: SopProduksiStep) => s.status === 'COMPLETED').length}/{sopSteps.length} selesai</span>
+              <div className="flex-1 bg-gray-200 rounded-full h-1.5">
+                <div className="bg-bgn-green-400 h-1.5 rounded-full transition-all"
+                  style={{ width: `${(sopSteps.filter((s: SopProduksiStep) => s.status === 'COMPLETED').length / sopSteps.length) * 100}%` }} />
+              </div>
+            </div>
+          </div>
+          <div className="divide-y divide-bgn-100">
+            {sopSteps.map((step: SopProduksiStep, idx: number) => {
+              const durasi = step.waktuMulai && step.waktuSelesai
+                ? Math.round((new Date(step.waktuSelesai).getTime() - new Date(step.waktuMulai).getTime()) / 60000)
+                : null
+              const estimasi = step.templateStep?.estimasiMenit
+              return (
+                <div key={step.id} className={`flex items-center gap-3 px-5 py-3 ${step.status === 'COMPLETED' ? 'bg-bgn-green-50' : step.status === 'IN_PROGRESS' ? 'bg-blue-50' : 'bg-white'}`}>
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${step.status === 'COMPLETED' ? 'bg-bgn-green-400 text-white' : step.status === 'IN_PROGRESS' ? 'bg-blue-400 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                    {step.status === 'COMPLETED' ? '✓' : step.status === 'IN_PROGRESS' ? '▶' : idx + 1}
+                  </span>
+                  <div className="flex-1">
+                    <p className={`text-sm font-medium ${step.status === 'COMPLETED' ? 'text-bgn-green-700' : step.status === 'IN_PROGRESS' ? 'text-blue-700' : 'text-gray-700'}`}>
+                      {step.templateStep?.namaTahap ?? `Step ${idx + 1}`}
+                    </p>
+                    <div className="flex gap-3 text-xs text-gray-400 mt-0.5">
+                      {estimasi && <span>Estimasi: {estimasi} mnt</span>}
+                      {durasi !== null && <span className={durasi > (estimasi ?? Infinity) ? 'text-orange-500' : 'text-bgn-green-600'}>Aktual: {durasi} mnt</span>}
+                      {step.catatan && <span className="text-gray-500">{step.catatan}</span>}
+                    </div>
+                  </div>
+                  {prod.status === 'IN_PROGRESS' && (
+                    <div className="flex gap-1">
+                      {step.status === 'PENDING' && (
+                        <button onClick={() => mulaiSopMutation.mutate(step.id)} disabled={mulaiSopMutation.isPending}
+                          className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 disabled:opacity-50">Mulai</button>
+                      )}
+                      {step.status === 'IN_PROGRESS' && (
+                        <button onClick={() => selesaiSopMutation.mutate(step.id)} disabled={selesaiSopMutation.isPending}
+                          className="bg-bgn-green-400 text-white px-3 py-1 rounded text-xs hover:bg-bgn-green-500 disabled:opacity-50">Selesai</button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
