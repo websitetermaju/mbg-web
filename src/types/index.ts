@@ -157,3 +157,66 @@ export interface Notifikasi {
   sppgId: string | null
   createdAt: string
 }
+
+// ─── Permintaan Pembelian ──────────────────────────────────────────
+export type StatusPR = 'DRAFT' | 'APPROVED' | 'CONVERTED' | 'REJECTED'
+
+export interface PRItem {
+  id: string
+  bahanBakuId: string
+  bahanBaku?: { nama: string; satuan: string }
+  jumlah: number
+  keterangan: string | null
+}
+
+export interface PermintaanPembelian {
+  id: string
+  sppgId: string
+  nomorPr: string
+  tanggal: string
+  catatan: string | null
+  status: StatusPR
+  alasanTolak: string | null
+  createdById: string | null
+  approvedById: string | null
+  convertedPoId: string | null
+  items: PRItem[]
+  createdAt: string
+  updatedAt: string
+}
+
+// ─── Invoice ───────────────────────────────────────────────────────
+export type StatusInvoice = 'UNPAID' | 'PARTIALLY_PAID' | 'PAID' | 'OVERDUE'
+export type MetodeBayar = 'TRANSFER' | 'TUNAI' | 'CEK'
+
+export interface Pembayaran {
+  id: string
+  invoiceId: string
+  sppgId: string
+  jumlah: number
+  tanggalBayar: string
+  metodeBayar: MetodeBayar
+  buktiUrl: string | null
+  catatan: string | null
+  createdById: string | null
+  createdAt: string
+}
+
+export interface Invoice {
+  id: string
+  sppgId: string
+  pengadaanId: string
+  pengadaan?: { nomorPo: string }
+  supplierId: string | null
+  supplier?: { nama: string } | null
+  nomorInvoice: string
+  tanggalTerbit: string
+  tanggalJatuhTempo: string
+  totalTagihan: number
+  totalDibayar: number
+  status: StatusInvoice
+  catatan: string | null
+  pembayaran: Pembayaran[]
+  createdAt: string
+  updatedAt: string
+}
