@@ -342,6 +342,24 @@ export interface PemeriksaanHigiene {
   updatedAt: string
 }
 
+// ─── Cek mutu penerimaan bahan baku ──────────────────────────────
+export interface CekMutuPenerimaan {
+  id: string
+  pengadaanId: string
+  sppgId: string
+  waktu: string
+  kondisiFisikBaik: boolean
+  kesegaranBaik: boolean
+  kemasanBaik: boolean
+  kedaluwarsaOk: boolean
+  suhuTerima: number | null
+  lolos: boolean
+  diperiksaOlehId: string | null
+  catatan: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 // ─── Supplier ─────────────────────────────────────────────────────
 export type JenisUsaha = 'PT' | 'CV' | 'KOPERASI' | 'UMKM' | 'PERORANGAN'
 export type KategoriSupplier = 'BAHAN_SEGAR' | 'BAHAN_KERING' | 'BUMBU_REMPAH' | 'KEMASAN' | 'LAINNYA'

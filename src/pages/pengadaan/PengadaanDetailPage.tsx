@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { pengadaanApi } from '@/api/endpoints/pengadaan'
 import { invoiceApi } from '@/api/endpoints/invoice'
 import { StatusBadge } from '@/components/StatusBadge'
+import { CekMutuSection } from './CekMutuSection'
 import { getErrorMessage } from '@/utils/error'
 
 export function PengadaanDetailPage() {
@@ -141,6 +142,9 @@ export function PengadaanDetailPage() {
       {po.catatan && (
         <p className="text-sm text-gray-500 mb-6">Catatan: {po.catatan}</p>
       )}
+
+      {/* Cek mutu penerimaan — saat barang dipesan/diterima */}
+      {(isOrdered || po.status === 'RECEIVED') && <CekMutuSection pengadaanId={po.id} />}
 
       <div className="flex gap-3">
         {isOrdered && (
