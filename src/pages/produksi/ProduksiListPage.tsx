@@ -107,12 +107,20 @@ export function ProduksiListPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Produksi</h1>
-        <Link
-          to="/produksi/baru"
-          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
-        >
-          + Buat Produksi
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/sop-template"
+            className="border border-bgn-200 text-bgn-700 px-4 py-2 rounded-lg text-sm hover:bg-bgn-50"
+          >
+            SOP dapur
+          </Link>
+          <Link
+            to="/produksi/baru"
+            className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
+          >
+            + Buat Produksi
+          </Link>
+        </div>
       </div>
 
       {isLoading ? (

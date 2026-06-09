@@ -35,6 +35,16 @@ import { LokasiGudangPage } from '@/pages/lokasi-gudang/LokasiGudangPage'
 import { StockOpnamePage } from '@/pages/stock-opname/StockOpnamePage'
 import { StockOpnameDetailPage } from '@/pages/stock-opname/StockOpnameDetailPage'
 import { SopTemplatePage } from '@/pages/sop-template/SopTemplatePage'
+import { PenerimaListPage } from '@/pages/penerima/PenerimaListPage'
+import { PenerimaFormPage } from '@/pages/penerima/PenerimaFormPage'
+import { PenerimaDetailPage } from '@/pages/penerima/PenerimaDetailPage'
+import { SekolahListPage } from '@/pages/sekolah/SekolahListPage'
+import { SekolahFormPage } from '@/pages/sekolah/SekolahFormPage'
+import { SekolahDetailPage } from '@/pages/sekolah/SekolahDetailPage'
+import { SppgListPage } from '@/pages/sppg/SppgListPage'
+import { SppgDetailPage } from '@/pages/sppg/SppgDetailPage'
+import { UserListPage } from '@/pages/users/UserListPage'
+import { UserFormPage } from '@/pages/users/UserFormPage'
 
 export default function App() {
   return (
@@ -79,6 +89,18 @@ export default function App() {
           <Route path="laporan" element={<LaporanListPage />} />
           <Route path="laporan/baru" element={<LaporanFormPage />} />
           <Route path="notifikasi" element={<NotifikasiPage />} />
+          <Route path="penerima" element={<PenerimaListPage />} />
+          <Route path="penerima/baru" element={<PenerimaFormPage />} />
+          <Route path="penerima/:id/edit" element={<PenerimaFormPage />} />
+          <Route path="penerima/:id" element={<PenerimaDetailPage />} />
+          <Route path="sekolah" element={<SekolahListPage />} />
+          <Route path="sekolah/baru" element={<SekolahFormPage />} />
+          <Route path="sekolah/:id/edit" element={<SekolahFormPage />} />
+          <Route path="sekolah/:id" element={<SekolahDetailPage />} />
+          <Route path="sppg" element={<SppgListPage />} />
+          <Route path="sppg/:id" element={<SppgDetailPage />} />
+          <Route path="users" element={<UserListPage />} />
+          <Route path="users/:id/edit" element={<UserFormPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>

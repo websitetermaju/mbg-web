@@ -20,6 +20,8 @@ const STATUS_COLORS: Record<string, string> = {
   NORMAL: 'bg-green-100 text-green-700',
   LOW_STOCK: 'bg-yellow-100 text-yellow-700',
   OUT_OF_STOCK: 'bg-red-100 text-red-700',
+  AKTIF: 'bg-green-100 text-green-700',
+  NONAKTIF: 'bg-gray-100 text-gray-700',
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -44,6 +46,8 @@ const STATUS_LABELS: Record<string, string> = {
   NORMAL: 'Normal',
   LOW_STOCK: 'Stok Menipis',
   OUT_OF_STOCK: 'Stok Habis',
+  AKTIF: 'Aktif',
+  NONAKTIF: 'Nonaktif',
 }
 
 export function StatusBadge({ status }: { status: string }) {

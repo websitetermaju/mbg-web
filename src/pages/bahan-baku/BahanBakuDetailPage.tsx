@@ -6,8 +6,6 @@ import { stokBatchApi } from '@/api/endpoints/stok-batch'
 import { StatusBadge } from '@/components/StatusBadge'
 import { getErrorMessage } from '@/utils/error'
 
-const formatRp = (n: number) => `Rp ${Number(n).toLocaleString('id-ID')}`
-
 function getDaysUntilExpiry(tanggal: string | null): number | null {
   if (!tanggal) return null
   const diff = new Date(tanggal).getTime() - Date.now()

@@ -34,12 +34,20 @@ export function KeuanganListPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Keuangan</h1>
-        <Link
-          to="/keuangan/baru"
-          className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
-        >
-          + Catat Transaksi
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/invoice"
+            className="border border-bgn-200 text-bgn-700 px-4 py-2 rounded-lg text-sm hover:bg-bgn-50"
+          >
+            Invoice / tagihan
+          </Link>
+          <Link
+            to="/keuangan/baru"
+            className="bg-bgn-green-400 text-white px-4 py-2 rounded-lg text-sm hover:bg-bgn-green-500"
+          >
+            + Catat Transaksi
+          </Link>
+        </div>
       </div>
 
       {/* Summary cards */}
