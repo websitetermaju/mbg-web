@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { produksiApi } from '@/api/endpoints/produksi'
 import { biayaApi } from '@/api/endpoints/biaya-produksi'
 import { qcApi } from '@/api/endpoints/qc'
+import { bankSampelApi } from '@/api/endpoints/bank-sampel'
 import { sopApi } from '@/api/endpoints/sop'
 import { StatusBadge } from '@/components/StatusBadge'
 import { getErrorMessage } from '@/utils/error'
@@ -75,10 +76,13 @@ export function ProduksiDetailPage() {
   })
 
   const centangMutation = useMutation({
-    mutationFn: ({ hasilId, passed, catatan }: { hasilId: string; passed: boolean; catatan?: string }) =>
-      qcApi.centang(id!, hasilId, { passed, catatan }),
+    mutationFn: ({ hasilId, passed, nilai, catatan }: { hasilId: string; passed?: boolean; nilai?: number; catatan?: string }) =>
+      qcApi.centang(id!, hasilId, { passed, nilai, catatan }),
     onSuccess: () => void refetchQc(),
   })
+
+  // Nilai suhu yang sedang diketik per item (sebelum dicatat). Key = id hasil.
+  const [suhuInput, setSuhuInput] = useState<Record<string, string>>({})
 
   const selesaiQcMutation = useMutation({
     mutationFn: () => qcApi.selesai(id!),
@@ -86,6 +90,33 @@ export function ProduksiDetailPage() {
       qc.invalidateQueries({ queryKey: ['produksi', id] })
       void refetchQc()
     },
+    onError: (err) => setError(getErrorMessage(err)),
+  })
+
+  // ── Bank Sampel (retain sample 24 jam) ──
+  const { data: sampelData, refetch: refetchSampel } = useQuery({
+    queryKey: ['bank-sampel', id],
+    queryFn: () => bankSampelApi.list(id!),
+    enabled: !!id,
+  })
+  const [sampelForm, setSampelForm] = useState({ namaMakanan: '', lokasiSimpan: '', suhuSimpan: '' })
+
+  const tambahSampelMutation = useMutation({
+    mutationFn: () => bankSampelApi.create(id!, {
+      namaMakanan: sampelForm.namaMakanan,
+      lokasiSimpan: sampelForm.lokasiSimpan || undefined,
+      suhuSimpan: sampelForm.suhuSimpan ? Number(sampelForm.suhuSimpan) : undefined,
+    }),
+    onSuccess: () => {
+      setSampelForm({ namaMakanan: '', lokasiSimpan: '', suhuSimpan: '' })
+      void refetchSampel()
+    },
+    onError: (err) => setError(getErrorMessage(err)),
+  })
+
+  const buangSampelMutation = useMutation({
+    mutationFn: (sampelId: string) => bankSampelApi.update(id!, sampelId, { status: 'DIBUANG' }),
+    onSuccess: () => void refetchSampel(),
     onError: (err) => setError(getErrorMessage(err)),
   })
 
@@ -107,6 +138,7 @@ export function ProduksiDetailPage() {
 
   const biaya = biayaData?.data.data
   const hasilList = qcData?.data.data ?? []
+  const sampelList = sampelData?.data.data ?? []
 
   return (
     <div className="max-w-3xl">
@@ -243,25 +275,73 @@ export function ProduksiDetailPage() {
           </p>
         ) : (
           <div className="divide-y divide-bgn-100">
-            {hasilList.map(hasil => (
+            {hasilList.map(hasil => {
+              const item = hasil.templateItem
+              const isSuhu = item?.tipe === 'SUHU'
+              const sat = item?.satuan ?? ''
+              // Keterangan rentang aman untuk item suhu (CCP)
+              const rentang = item && (item.batasMin != null || item.batasMax != null)
+                ? item.batasMin != null && item.batasMax != null
+                  ? `Aman ${item.batasMin}–${item.batasMax}${sat}`
+                  : item.batasMin != null
+                    ? `Aman ≥ ${item.batasMin}${sat}`
+                    : `Aman ≤ ${item.batasMax}${sat}`
+                : null
+
+              return (
               <div key={hasil.id} className={`flex items-center gap-3 px-5 py-3 ${hasil.passed ? 'bg-bgn-green-50' : hasil.checkedAt ? 'bg-red-50' : 'bg-white'}`}>
-                <button
-                  onClick={() => centangMutation.mutate({ hasilId: hasil.id, passed: !hasil.passed })}
-                  disabled={prod.qcSelesai}
-                  className={`w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                    hasil.passed ? 'bg-bgn-green-400 border-bgn-green-400 text-white' :
-                    hasil.checkedAt ? 'bg-red-100 border-red-400 text-red-500' :
-                    'border-gray-300 hover:border-bgn-green-400'
-                  } disabled:opacity-60 disabled:cursor-not-allowed`}
-                >
-                  {hasil.passed ? '✓' : hasil.checkedAt ? '✗' : ''}
-                </button>
+                {isSuhu ? (
+                  <span className="w-6 h-6 flex items-center justify-center flex-shrink-0 text-lg" aria-hidden>🌡️</span>
+                ) : (
+                  <button
+                    onClick={() => centangMutation.mutate({ hasilId: hasil.id, passed: !hasil.passed })}
+                    disabled={prod.qcSelesai}
+                    className={`w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                      hasil.passed ? 'bg-bgn-green-400 border-bgn-green-400 text-white' :
+                      hasil.checkedAt ? 'bg-red-100 border-red-400 text-red-500' :
+                      'border-gray-300 hover:border-bgn-green-400'
+                    } disabled:opacity-60 disabled:cursor-not-allowed`}
+                  >
+                    {hasil.passed ? '✓' : hasil.checkedAt ? '✗' : ''}
+                  </button>
+                )}
                 <div className="flex-1">
                   <p className={`text-sm ${hasil.passed ? 'text-bgn-green-700 font-medium' : hasil.checkedAt ? 'text-red-600' : 'text-gray-700'}`}>
-                    {hasil.templateItem?.namaCheck ?? `Item ${hasil.templateItemId.slice(0,6)}`}
+                    {item?.namaCheck ?? `Item ${hasil.templateItemId.slice(0,6)}`}
                   </p>
+                  {rentang && <p className="text-xs text-gray-400 mt-0.5">{rentang}</p>}
                   {hasil.catatan && <p className="text-xs text-gray-500 mt-0.5">{hasil.catatan}</p>}
                 </div>
+
+                {isSuhu && !prod.qcSelesai && (
+                  // Input suhu terukur: ketik angka lalu "Catat" → backend hitung lulus/gagal
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="number" inputMode="decimal" step="0.1"
+                      value={suhuInput[hasil.id] ?? (hasil.nilai != null ? String(hasil.nilai) : '')}
+                      onChange={(e) => setSuhuInput(s => ({ ...s, [hasil.id]: e.target.value }))}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && suhuInput[hasil.id]) {
+                          centangMutation.mutate({ hasilId: hasil.id, nilai: Number(suhuInput[hasil.id]) })
+                        }
+                      }}
+                      placeholder="0"
+                      className="w-20 border border-gray-300 rounded-lg px-2 py-1 text-sm text-right focus:ring-2 focus:ring-bgn-green-400 focus:outline-none"
+                    />
+                    {sat && <span className="text-xs text-gray-500">{sat}</span>}
+                    <button
+                      onClick={() => suhuInput[hasil.id] && centangMutation.mutate({ hasilId: hasil.id, nilai: Number(suhuInput[hasil.id]) })}
+                      disabled={!suhuInput[hasil.id] || centangMutation.isPending}
+                      className="bg-bgn-800 text-white text-xs px-3 py-1 rounded-lg hover:bg-bgn-900 disabled:opacity-50"
+                    >
+                      Catat
+                    </button>
+                  </div>
+                )}
+                {isSuhu && prod.qcSelesai && hasil.nilai != null && (
+                  <span className="text-sm font-medium text-gray-700">{hasil.nilai}{sat}</span>
+                )}
+
                 <span className={`text-xs px-2 py-0.5 rounded-full ${
                   hasil.passed ? 'bg-bgn-green-100 text-bgn-green-700' :
                   hasil.checkedAt ? 'bg-red-100 text-red-600' :
@@ -270,7 +350,85 @@ export function ProduksiDetailPage() {
                   {hasil.passed ? 'Lulus' : hasil.checkedAt ? 'Gagal' : 'Belum'}
                 </span>
               </div>
-            ))}
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Section Bank Sampel — retain sample 24 jam (juknis BGN) */}
+      <div className="bg-white rounded-xl shadow-md border border-bgn-100 overflow-hidden mt-4">
+        <div className="px-5 py-4 border-b border-bgn-100">
+          <h2 className="font-semibold text-bgn-900">Bank sampel makanan</h2>
+          <p className="text-xs text-gray-500 mt-0.5">Simpan contoh tiap menu minimal 1×24 jam sebagai bukti keamanan pangan.</p>
+        </div>
+
+        {/* Form tambah sampel */}
+        <div className="px-5 py-3 bg-bgn-50/40 border-b border-bgn-100 flex flex-wrap items-end gap-2">
+          <div className="flex-1 min-w-[160px]">
+            <label className="block text-xs font-medium text-gray-600 mb-1">Nama makanan *</label>
+            <input value={sampelForm.namaMakanan} onChange={(e) => setSampelForm(f => ({ ...f, namaMakanan: e.target.value }))}
+              placeholder="mis. Nasi ayam teriyaki"
+              className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-bgn-green-400 focus:outline-none" />
+          </div>
+          <div className="w-32">
+            <label className="block text-xs font-medium text-gray-600 mb-1">Lokasi simpan</label>
+            <input value={sampelForm.lokasiSimpan} onChange={(e) => setSampelForm(f => ({ ...f, lokasiSimpan: e.target.value }))}
+              placeholder="Chiller B"
+              className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-bgn-green-400 focus:outline-none" />
+          </div>
+          <div className="w-24">
+            <label className="block text-xs font-medium text-gray-600 mb-1">Suhu (°C)</label>
+            <input type="number" step="0.1" value={sampelForm.suhuSimpan} onChange={(e) => setSampelForm(f => ({ ...f, suhuSimpan: e.target.value }))}
+              placeholder="4"
+              className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm text-right focus:ring-2 focus:ring-bgn-green-400 focus:outline-none" />
+          </div>
+          <button onClick={() => sampelForm.namaMakanan && tambahSampelMutation.mutate()}
+            disabled={!sampelForm.namaMakanan || tambahSampelMutation.isPending}
+            className="bg-bgn-green-400 text-white text-sm px-4 py-1.5 rounded-lg hover:bg-bgn-green-500 disabled:opacity-50">
+            {tambahSampelMutation.isPending ? 'Menyimpan...' : 'Simpan sampel'}
+          </button>
+        </div>
+
+        {sampelList.length === 0 ? (
+          <p className="px-5 py-6 text-center text-gray-400 text-sm">Belum ada sampel disimpan untuk batch ini.</p>
+        ) : (
+          <div className="divide-y divide-bgn-100">
+            {sampelList.map(s => {
+              const kedaluwarsa = new Date(s.waktuKedaluwarsa)
+              const lewat = Date.now() > kedaluwarsa.getTime()
+              const fmt = (iso: string) => new Date(iso).toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+              return (
+                <div key={s.id} className="flex items-center gap-3 px-5 py-3">
+                  <span className="text-lg" aria-hidden>🍱</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-bgn-900">{s.namaMakanan}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Disimpan {fmt(s.waktuSimpan)}
+                      {s.lokasiSimpan ? ` · ${s.lokasiSimpan}` : ''}
+                      {s.suhuSimpan != null ? ` · ${s.suhuSimpan}°C` : ''}
+                    </p>
+                    <p className={`text-xs mt-0.5 ${lewat ? 'text-gray-400' : 'text-bgn-green-600'}`}>
+                      {s.status === 'DISIMPAN'
+                        ? (lewat ? `Retensi 24 jam selesai (${fmt(s.waktuKedaluwarsa)}) — boleh dibuang` : `Simpan sampai ${fmt(s.waktuKedaluwarsa)}`)
+                        : s.status === 'DIUJI' ? 'Diambil untuk uji lab' : 'Sudah dibuang'}
+                    </p>
+                  </div>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    s.status === 'DISIMPAN' ? 'bg-bgn-green-100 text-bgn-green-700' :
+                    s.status === 'DIUJI' ? 'bg-amber-100 text-amber-700' :
+                    'bg-gray-100 text-gray-500'
+                  }`}>
+                    {s.status === 'DISIMPAN' ? 'Disimpan' : s.status === 'DIUJI' ? 'Diuji' : 'Dibuang'}
+                  </span>
+                  {s.status === 'DISIMPAN' && (
+                    <button onClick={() => { if (confirm('Tandai sampel ini sudah dibuang?')) buangSampelMutation.mutate(s.id) }}
+                      disabled={buangSampelMutation.isPending}
+                      className="text-xs text-red-500 hover:underline disabled:opacity-50">Buang</button>
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
       </div>

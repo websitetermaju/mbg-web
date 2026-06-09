@@ -8,8 +8,12 @@ export const qcApi = {
     api.get<ApiResponse<QcHasil[]>>(`/produksi/${produksiId}/qc`),
   init: (produksiId: string) =>
     api.post<ApiResponse<QcHasil[]>>(`/produksi/${produksiId}/qc/init`),
-  centang: (produksiId: string, hasilId: string, data: { passed: boolean; catatan?: string }) =>
-    api.patch<ApiResponse<QcHasil>>(`/produksi/${produksiId}/qc/${hasilId}`, data),
+  // CHECKLIST: kirim `passed`. SUHU: kirim `nilai` (lulus dihitung backend dari batas aman).
+  centang: (
+    produksiId: string,
+    hasilId: string,
+    data: { passed?: boolean; nilai?: number; catatan?: string },
+  ) => api.patch<ApiResponse<QcHasil>>(`/produksi/${produksiId}/qc/${hasilId}`, data),
   selesai: (produksiId: string) =>
     api.post<ApiResponse<Produksi>>(`/produksi/${produksiId}/qc/selesai`),
 }

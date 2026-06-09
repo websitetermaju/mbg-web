@@ -82,6 +82,7 @@ export interface Pengadaan {
   totalNilai: number
   catatan: string | null
   items: PengadaanItem[]
+  permintaanPembelianId: string | null
   sppgId: string
 }
 
@@ -262,10 +263,18 @@ export interface BiayaSummary {
 }
 
 // ─── QC ───────────────────────────────────────────────────────────
+// Jenis pemeriksaan QC: CHECKLIST = centang lulus/tidak;
+// SUHU = input angka terukur (CCP) dibandingkan ke batas aman.
+export type QcTipe = 'CHECKLIST' | 'SUHU'
+
 export interface QcTemplateItem {
   id: string
   sppgId: string
   namaCheck: string
+  tipe: QcTipe
+  satuan: string | null
+  batasMin: number | null
+  batasMax: number | null
   urutan: number
   isActive: boolean
 }
@@ -276,9 +285,29 @@ export interface QcHasil {
   templateItemId: string
   templateItem?: QcTemplateItem
   passed: boolean
+  nilai: number | null
   catatan: string | null
   checkedById: string | null
   checkedAt: string | null
+}
+
+// ─── Bank Sampel (retain sample 24 jam) ──────────────────────────
+export type StatusSampel = 'DISIMPAN' | 'DIBUANG' | 'DIUJI'
+
+export interface BankSampel {
+  id: string
+  produksiId: string
+  sppgId: string
+  namaMakanan: string
+  waktuSimpan: string
+  waktuKedaluwarsa: string
+  lokasiSimpan: string | null
+  suhuSimpan: number | null
+  status: StatusSampel
+  petugasId: string | null
+  catatan: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 // ─── Supplier ─────────────────────────────────────────────────────
@@ -407,4 +436,72 @@ export interface SopProduksiStep {
   waktuSelesai: string | null
   catatan: string | null
   checkedById: string | null
+}
+
+// ─── SPPG ──────────────────────────────────────────────────────────
+export type SppgStatus = 'AKTIF' | 'NONAKTIF'
+
+export interface Sppg {
+  id: string
+  kode: string
+  nama: string
+  alamat: string
+  penanggungJawab: string
+  noTelp: string | null
+  wilayah: string
+  provinsi: string
+  status: SppgStatus
+  createdAt: string
+  updatedAt: string
+}
+
+// ─── User ──────────────────────────────────────────────────────────
+export interface UserData {
+  id: string
+  nama: string
+  email: string
+  role: Role
+  sppgId: string | null
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+// ─── Penerima ──────────────────────────────────────────────────────
+export type JenisKelamin = 'L' | 'P'
+export type JenjangPendidikan = 'TK' | 'SD' | 'SMP' | 'SMA'
+export type StatusPenerima = 'AKTIF' | 'NONAKTIF'
+
+export interface Penerima {
+  id: string
+  nik: string
+  nama: string
+  tanggalLahir: string
+  jenisKelamin: JenisKelamin
+  alamat: string
+  institusi: string
+  jenjang: JenjangPendidikan
+  kelas: string | null
+  status: StatusPenerima
+  sppgId: string
+  createdAt: string
+  updatedAt: string
+}
+
+// ─── Sekolah ───────────────────────────────────────────────────────
+export type KategoriSekolah = 'TK_PAUD' | 'SD_MI' | 'SMP_MTS' | 'SMA_MA_SMK' | 'POSYANDU'
+export type StatusSekolah = 'AKTIF' | 'NONAKTIF'
+
+export interface Sekolah {
+  id: string
+  nama: string
+  alamat: string
+  kabupatenKota: string
+  kategori: KategoriSekolah
+  jumlahPenerima: number
+  noTelp: string | null
+  status: StatusSekolah
+  sppgId: string
+  createdAt: string
+  updatedAt: string
 }
