@@ -310,6 +310,20 @@ export interface BankSampel {
   updatedAt: string
 }
 
+// ─── Log suhu penyimpanan (rantai dingin) ────────────────────────
+export interface LogSuhuGudang {
+  id: string
+  lokasiGudangId: string
+  sppgId: string
+  waktu: string
+  suhu: number
+  aman: boolean
+  petugasId: string | null
+  catatan: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 // ─── Supplier ─────────────────────────────────────────────────────
 export type JenisUsaha = 'PT' | 'CV' | 'KOPERASI' | 'UMKM' | 'PERORANGAN'
 export type KategoriSupplier = 'BAHAN_SEGAR' | 'BAHAN_KERING' | 'BUMBU_REMPAH' | 'KEMASAN' | 'LAINNYA'

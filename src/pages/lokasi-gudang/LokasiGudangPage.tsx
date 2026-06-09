@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { lokasiGudangApi } from '@/api/endpoints/lokasi-gudang'
 import { getErrorMessage } from '@/utils/error'
+import { SuhuLokasiCard } from './SuhuLokasiCard'
 import type { TipeLokasiGudang } from '@/types'
 
 const TIPE_ICONS: Record<TipeLokasiGudang, string> = { KERING: '📦', DINGIN: '❄️', BEKU: '🧊' }
@@ -55,6 +56,19 @@ export function LokasiGudangPage() {
       </div>
 
       {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 mb-4 text-sm">{error}</div>}
+
+      {/* Pemantauan suhu harian — hanya lokasi dingin/beku (rantai dingin) */}
+      {items.some(i => i.tipe !== 'KERING') && (
+        <div className="mb-6">
+          <h2 className="font-semibold text-bgn-900 mb-1">Pemantauan suhu hari ini</h2>
+          <p className="text-xs text-gray-500 mb-3">Catat suhu chiller & freezer tiap hari sebagai bukti rantai dingin.</p>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {items.filter(i => i.tipe !== 'KERING').map(item => (
+              <SuhuLokasiCard key={item.id} lokasi={{ id: item.id, nama: item.nama, tipe: item.tipe }} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {showForm && (
         <div className="bg-white rounded-xl border border-bgn-200 p-5 shadow-md mb-4">
