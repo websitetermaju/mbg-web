@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Test artifacts & screenshots
+/test-results/
+/.playwright-mcp/
+/playwright-report/
+/login-*.png
+
+# Claude local settings
+.claude/settings.local.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBG · Aplikasi SPPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --bg:#F5F6F2; --surface:#FFFFFF; --surface-2:#F0F2EC;
+  --primary:#15694C; --primary-d:#0F4F39; --primary-soft:#E3F0EA;
+  --ink:#1B2622; --muted:#5E6E68; --faint:#8A968F;
+  --line:#E4E8E2; --line-d:#D2D8D0;
+  --amber:#B5740E; --amber-soft:#FBEFDB;
+  --red:#B23A30; --red-soft:#FBE7E4;
+  --blue:#1F6691; --blue-soft:#E3EEF5;
+  --green:#2E7D32; --green-soft:#E5F1E4;
+  --r:10px; --r-lg:14px;
+  --side-w:248px;
+  font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit}
+@media (prefers-reduced-motion:no-preference){
+  #main>*{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+}
+
+/* ---- shell ---- */
+.app{display:grid;grid-template-columns:var(--side-w) 1fr;min-height:100vh}
+.side{background:var(--primary-d);color:#E8F0EC;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:20px 20px 14px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.1)}
+.brand .logo{width:38px;height:38px;border-radius:10px;background:#fff;color:var(--primary-d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.brand b{font-size:16px;font-weight:600;display:block;line-height:1.15}
+.brand span{font-size:12px;color:#A9C6BB}
+.nav{padding:8px 12px;flex:1}
+.nav .glabel{font-size:11px;letter-spacing:.06em;color:#8FB0A4;text-transform:uppercase;margin:16px 10px 6px;font-weight:600}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:9px;color:#CFE0D9;font-size:14px;text-decoration:none;margin-bottom:2px;transition:background .12s}
+.nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav a.active{background:#fff;color:var(--primary-d);font-weight:600}
+.nav a.active .ico{color:var(--primary)}
+.nav .ico{width:18px;height:18px;flex-shrink:0;display:flex;color:#9FC0B4}
+.nav a.active .num,.nav a:hover .num{background:var(--primary);color:#fff}
+.num{min-width:20px;height:20px;border-radius:6px;background:rgba(255,255,255,.14);color:#DCECE5;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.side .out{margin:10px 12px 16px;padding:9px 11px;border-radius:9px;color:#A9C6BB;display:flex;gap:11px;align-items:center;font-size:14px;text-decoration:none}
+.side .out:hover{background:rgba(255,255,255,.08);color:#fff}
+
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{background:var(--surface);border-bottom:1px solid var(--line);padding:0 26px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+.topbar .crumb{font-size:13px;color:var(--muted)}
+.topbar .crumb b{color:var(--ink);font-weight:600}
+.topbar .right{display:flex;align-items:center;gap:14px}
+.date{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.rolebox{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:30px;padding:5px 8px 5px 12px}
+.rolebox label{font-size:12px;color:var(--muted)}
+.rolebox select{border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;outline:none}
+.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:38px;height:38px;align-items:center;justify-content:center;color:var(--ink)}
+#main{padding:26px;max-width:1080px;width:100%}
+
+/* ---- bits ---- */
+.page-h{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.page-h h1{font-size:23px;font-weight:700;letter-spacing:-.01em}
+.page-h p{color:var(--muted);font-size:14px;margin-top:2px}
+.btn{border:1px solid var(--line-d);background:var(--surface);color:var(--ink);border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:7px;transition:.12s}
+.btn:hover{background:var(--surface-2)}
+.btn .ico,.btn svg{width:16px;height:16px}
+.btn-pri{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn-pri:hover{background:var(--primary-d)}
+.btn-sm{padding:6px 11px;font-size:13px;border-radius:8px}
+
+.cards{display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-h h2{font-size:16px;font-weight:600}
+.card-h .sub{font-size:13px;color:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 18px}
+.stat .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.stat .k .ico{width:15px;height:15px;color:var(--faint)}
+.stat .v{font-size:27px;font-weight:700;margin-top:6px;letter-spacing:-.02em}
+.stat .v.warn{color:var(--amber)}
+.stat .v.ok{color:var(--green)}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:30px;white-space:nowrap}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-ok{background:var(--green-soft);color:var(--green)}
+.p-warn{background:var(--amber-soft);color:var(--amber)}
+.p-red{background:var(--red-soft);color:var(--red)}
+.p-blue{background:var(--blue-soft);color:var(--blue)}
+.p-neut{background:var(--surface-2);color:var(--muted)}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{text-align:left;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:0 14px 10px;border-bottom:1px solid var(--line)}
+tbody td{padding:13px 14px;border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+td .ttl{font-weight:600}
+td .sub{font-size:12.5px;color:var(--muted)}
+.r-end{text-align:right}
+
+/* checklist (signature) */
+.flow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.flow .step{display:flex;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.flow .step:last-child{border-bottom:none}
+.flow .step.active{background:var(--primary-soft)}
+.flow .badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.flow .badge svg{width:18px;height:18px}
+.b-done{background:var(--green-soft);color:var(--green)}
+.b-active{background:var(--primary);color:#fff}
+.b-todo{background:var(--surface-2);color:var(--faint)}
+.flow .txt{flex:1;min-width:0}
+.flow .txt .t{font-weight:600;font-size:15px}
+.flow .step.todo .txt .t{color:var(--muted);font-weight:500}
+.flow .txt .d{font-size:13px;color:var(--faint)}
+.flow .step.active .txt .d{color:var(--primary)}
+
+.banner{display:flex;align-items:center;gap:11px;background:var(--amber-soft);border:1px solid #F0DBB4;color:#7A4E08;border-radius:var(--r);padding:12px 15px;font-size:14px;margin-bottom:16px}
+.banner svg{width:18px;height:18px;flex-shrink:0}
+.form-row{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.form-row label{font-size:13px;font-weight:600;color:var(--muted)}
+.form-row .val{font-size:15px;padding:9px 12px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px}
+.qc{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.qc:last-child{border:none}
+.qc .box{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-d);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qc.done .box{background:var(--green);border-color:var(--green);color:#fff}
+.qc.done .box svg{width:14px;height:14px}
+.qc .lbl{flex:1;font-size:14px}
+.qc.done .lbl{color:var(--muted)}
+.split{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:start}
+
+.scrim{display:none}
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;width:var(--side-w);z-index:30;transform:translateX(-100%);transition:transform .25s}
+  .app.open .side{transform:none}
+  .app.open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:20}
+  .menu-btn{display:flex}
+  #main{padding:18px}
+  .split{grid-template-columns:1fr}
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<h1 class="sr">Prototipe aplikasi SPPG untuk program Makan Bergizi Gratis</h1>
+<div class="app" id="app">
+  <div class="scrim" onclick="toggleNav(false)"></div>
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">MBG</div>
+      <div><b>Aplikasi SPPG</b><span>Makan Bergizi Gratis</span></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <a class="out" href="#" onclick="return false"><i data-lucide="log-out" class="ico"></i> Keluar</a>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="menu-btn" onclick="toggleNav(true)" aria-label="Buka menu"><i data-lucide="menu"></i></button>
+        <div class="crumb">SPPG Cibubur 01 · <b id="crumb">Beranda</b></div>
+      </div>
+      <div class="right">
+        <div class="date"><i data-lucide="calendar" style="width:15px;height:15px"></i> Selasa, 9 Juni 2026</div>
+        <div class="rolebox">
+          <label>Masuk sebagai</label>
+          <select id="role" onchange="setRole(this.value)">
+            <option value="kepala">Kepala SPPG</option>
+            <option value="gizi">Ahli Gizi</option>
+            <option value="akuntan">Akuntan</option>
+          </select>
+        </div>
+      </div>
+    </header>
+    <main id="main"></main>
+  </div>
+</div>
+
+<script>
+const F = n => new Intl.NumberFormat('id-ID').format(n);
+const Rp = n => 'Rp ' + F(n);
+const pill = (txt,t)=>`<span class="pill p-${t}"><span class="dot"></span>${txt}</span>`;
+
+/* ---------- sample data ---------- */
+const STEPS = [
+  {n:1,t:'Menu hari ini',d:'Menu & porsi sudah disusun',s:'done'},
+  {n:2,t:'Pengadaan bahan',d:'PO terkirim ke 3 supplier',s:'done'},
+  {n:3,t:'Stok & bahan',d:'Bahan diterima & disimpan',s:'done'},
+  {n:4,t:'Produksi (masak + QC)',d:'Sedang berjalan — 2 dari 5 cek mutu',s:'active',go:'produksi'},
+  {n:5,t:'Distribusi ke sekolah',d:'Menunggu produksi selesai',s:'todo'},
+  {n:6,t:'Catat biaya',d:'Setelah distribusi',s:'todo'},
+  {n:7,t:'Kirim laporan ke BGN',d:'Langkah terakhir hari ini',s:'todo'},
+];
+const MENU = [
+  {tgl:'9 Jun',nama:'Nasi, ayam kecap, tumis buncis, jeruk',kal:680,prot:24,st:['Disetujui','ok']},
+  {tgl:'10 Jun',nama:'Nasi, telur balado, sayur sop, pisang',kal:640,prot:21,st:['Disetujui','ok']},
+  {tgl:'11 Jun',nama:'Nasi, ikan goreng, capcay, semangka',kal:700,prot:26,st:['Menunggu ahli gizi','warn']},
+];
+const PO = [
+  {no:'PO-0612',sup:'CV Sumber Tani',item:'Beras, sayur',total:4200000,st:['Diterima','ok']},
+  {no:'PO-0613',sup:'UD Protein Jaya',item:'Ayam, telur',total:6800000,st:['Dipesan','blue']},
+  {no:'PB-0090',sup:'—',item:'Buah harian',total:1500000,st:['Perlu disetujui','warn']},
+];
+const STOK = [
+  {nama:'Beras premium',stok:240,sat:'kg',st:['Aman','ok']},
+  {nama:'Ayam potong',stok:18,sat:'kg',st:['Menipis','warn']},
+  {nama:'Minyak goreng',stok:0,sat:'liter',st:['Habis','red']},
+  {nama:'Telur ayam',stok:55,sat:'kg',st:['Aman','ok']},
+];
+const DIST = [
+  {sek:'SDN 01 Cibubur',porsi:250,jam:'09.15',st:['Terkirim','ok']},
+  {sek:'SDN 02 Cibubur',porsi:180,jam:'09.35',st:['Dalam perjalanan','blue']},
+  {sek:'SMPN 5 Cibubur',porsi:420,jam:'—',st:['Siap antar','warn']},
+];
+const TRX = [
+  {ket:'Pembelian ayam & telur',kat:'Bahan baku',nom:-6800000},
+  {ket:'Pembelian sayur & buah',kat:'Bahan baku',nom:-2100000},
+  {ket:'Insentif relawan (harian)',kat:'Tenaga kerja',nom:-3500000},
+  {ket:'Pencairan dana operasional',kat:'Pemasukan',nom:24000000},
+];
+const LAP = [
+  {jud:'Laporan harian — 8 Jun 2026',st:['Diterima BGN','ok']},
+  {jud:'Laporan harian — 7 Jun 2026',st:['Diterima BGN','ok']},
+  {jud:'Laporan mingguan — minggu 23',st:['Ditolak, revisi','red']},
+  {jud:'Laporan harian — 9 Jun 2026',st:['Draft','neut']},
+];
+const SEKOLAH=[['SDN 01 Cibubur','SD',250],['SDN 02 Cibubur','SD',180],['SMPN 5 Cibubur','SMP',420],['PAUD Melati','PAUD',60],['Posyandu Anggrek','Ibu & balita',45]];
+const SUPPLIER=[['CV Sumber Tani','Beras & sayur','0812-3456-7890'],['UD Protein Jaya','Ayam, telur, ikan','0813-9988-1122'],['Toko Buah Segar','Buah harian','0857-4455-6677']];
+const GUDANG=[['Kulkas Sayuran','Dingin','Suhu 4°C'],['Freezer Protein','Beku','Suhu -18°C'],['Gudang Kering','Suhu ruang','Beras, minyak, bumbu']];
+const RESEP=[['Ayam kecap','30 porsi','Ayam, kecap, bawang'],['Tumis buncis','30 porsi','Buncis, wortel, bawang'],['Sayur sop','30 porsi','Wortel, kentang, buncis']];
+const USERS=[['Budi Santoso','Kepala SPPG'],['Siti Nuraeni','Ahli Gizi'],['Andi Wijaya','Akuntan'],['Rina Lestari','Asisten Lapangan']];
+
+/* ---------- routes ---------- */
+const ROUTES = {
+  beranda:{title:'Beranda',group:0,icon:'home',roles:['kepala','gizi','akuntan'],render:rBeranda},
+  menu:{title:'Menu',group:'Harian',num:1,roles:['kepala','gizi'],render:rMenu},
+  pengadaan:{title:'Pengadaan',group:'Harian',num:2,roles:['kepala','akuntan'],render:rPengadaan},
+  stok:{title:'Stok & bahan',group:'Harian',num:3,roles:['kepala','gizi','akuntan'],render:rStok},
+  produksi:{title:'Produksi',group:'Harian',num:4,roles:['kepala','gizi'],render:rProduksi},
+  distribusi:{title:'Distribusi',group:'Harian',num:5,roles:['kepala'],render:rDistribusi},
+  keuangan:{title:'Keuangan',group:'Harian',num:6,roles:['kepala','akuntan'],render:rKeuangan},
+  laporan:{title:'Laporan',group:'Harian',num:7,roles:['kepala','gizi','akuntan'],render:rLaporan},
+  profil:{title:'Profil SPPG',group:'Setup',icon:'building',roles:['kepala'],render:rProfil},
+  sekolah:{title:'Sekolah & penerima',group:'Setup',icon:'school',roles:['kepala','gizi'],render:()=>tablePage('Sekolah & penerima','Daftar sekolah dan posyandu yang dilayani',['Nama','Jenjang','Penerima'],SEKOLAH.map(r=>[`<span class="ttl">${r[0]}</span>`,r[1],F(r[2])+' orang']),'Tambah sekolah')},
+  supplier:{title:'Supplier',group:'Setup',icon:'truck',roles:['kepala','akuntan'],render:()=>tablePage('Supplier','Pemasok bahan baku',['Nama','Kategori','Kontak'],SUPPLIER.map(r=>[`<span class="ttl">${r[0]}</span>`,r[1],r[2]]),'Tambah supplier')},
+  gudang:{title:'Gudang',group:'Setup',icon:'warehouse',roles:['kepala','akuntan'],render:()=>tablePage('Lokasi gudang','Tempat penyimpanan bahan',['Nama','Tipe','Keterangan'],GUDANG.map(r=>[`<span class="ttl">${r[0]}</span>`,pillTipe(r[1]),r[2]]),'Tambah lokasi')},
+  resep:{title:'Resep',group:'Setup',icon:'book-open',roles:['kepala','gizi'],render:()=>tablePage('Resep','Resep & kebutuhan bahan per hidangan',['Nama','Hasil','Bahan utama'],RESEP.map(r=>[`<span class="ttl">${r[0]}</span>`,r[1],`<span class="sub">${r[2]}</span>`]),'Tambah resep')},
+  pengguna:{title:'Pengguna',group:'Setup',icon:'users',roles:['kepala'],render:()=>tablePage('Pengguna','Akun staf SPPG',['Nama','Peran'],USERS.map(r=>[`<span class="ttl">${r[0]}</span>`,pill(r[1],'neut')]),'Tambah pengguna')},
+};
+const pillTipe = t => t==='Beku'?pill('Beku','blue'):t==='Dingin'?pill('Dingin','blue'):pill('Suhu ruang','neut');
+
+let role='kepala', current='beranda';
+
+function renderNav(){
+  const groups={};
+  for(const id in ROUTES){const r=ROUTES[id]; if(!r.roles.includes(role))continue; const g=r.group; (groups[g]=groups[g]||[]).push({id,...r});}
+  let html='';
+  // beranda (group 0) first, no label
+  (groups[0]||[]).forEach(r=>{ html+=navLink(r); });
+  ['Harian','Setup'].forEach(g=>{
+    if(!groups[g])return;
+    html+=`<div class="glabel">${g==='Harian'?'Operasional harian':'Setup'}</div>`;
+    groups[g].forEach(r=>html+=navLink(r));
+  });
+  document.getElementById('nav').innerHTML=html;
+  if(window.lucide) lucide.createIcons();
+}
+function navLink(r){
+  const badge = r.num!==undefined ? `<span class="num">${r.num}</span>` : `<i data-lucide="${r.icon}" class="ico"></i>`;
+  return `<a href="#" onclick="go('${r.id}');return false" class="${r.id===current?'active':''}">${badge}<span>${r.title}</span></a>`;
+}
+function go(id){ if(!ROUTES[id]||!ROUTES[id].roles.includes(role))id='beranda'; current=id;
+  document.getElementById('crumb').textContent=ROUTES[id].title;
+  document.getElementById('main').innerHTML=ROUTES[id].render();
+  renderNav(); toggleNav(false); window.scrollTo(0,0); if(window.lucide)lucide.createIcons();
+}
+function setRole(v){ role=v; if(!ROUTES[current].roles.includes(role))current='beranda'; go(current); }
+function toggleNav(open){ document.getElementById('app').classList.toggle('open',open); }
+
+/* ---------- shared ---------- */
+function head(t,d,btn){ return `<div class="page-h"><div><h1>${t}</h1>${d?`<p>${d}</p>`:''}</div>${btn?`<button class="btn btn-pri"><i data-lucide="plus"></i> ${btn}</button>`:''}</div>`; }
+function tableCard(cols,rows){
+  return `<div class="card" style="padding:8px 4px"><table><thead><tr>${cols.map((c,i)=>`<th class="${i===cols.length-1&&c===''?'r-end':''}">${c}</th>`).join('')}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===r.length-1?'r-end':''}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function tablePage(t,d,cols,rows,btn){ return head(t,d,btn)+tableCard(cols,rows); }
+
+/* ---------- screens ---------- */
+function rBeranda(){
+  const done=STEPS.filter(s=>s.s==='done').length;
+  const icon=s=>s==='done'?'<i data-lucide="check"></i>':s==='active'?'<i data-lucide="play"></i>':'<i data-lucide="clock"></i>';
+  const cls=s=>s==='done'?'b-done':s==='active'?'b-active':'b-todo';
+  return `${head('Selamat pagi, Budi 👋','Ini yang perlu diselesaikan hari ini. Ikuti urutannya dari atas.')}
+  <div class="stats">
+    <div class="stat"><div class="k"><i data-lucide="utensils" class="ico"></i> Porsi hari ini</div><div class="v">${F(1250)}</div></div>
+    <div class="stat"><div class="k"><i data-lucide="school" class="ico"></i> Sekolah dilayani</div><div class="v">8</div></div>
+    <div class="stat"><div class="k"><i data-lucide="wallet" class="ico"></i> Biaya per porsi</div><div class="v">${Rp(9800)}</div></div>
+    <div class="stat"><div class="k"><i data-lucide="file-text" class="ico"></i> Laporan BGN</div><div class="v warn">Belum</div></div>
+  </div>
+  <div class="card-h" style="margin-bottom:12px"><h2 style="font-size:17px">Langkah hari ini</h2><span class="sub">${done} dari 7 selesai</span></div>
+  <div class="flow">${STEPS.map(s=>`
+    <div class="step ${s.s}">
+      <div class="badge ${cls(s.s)}">${icon(s.s)}</div>
+      <div class="txt"><div class="t">${s.n} · ${s.t}</div><div class="d">${s.d}</div></div>
+      ${s.s==='active'?`<button class="btn btn-pri btn-sm" onclick="go('${s.go}')">Lanjutkan <i data-lucide="arrow-right"></i></button>`:
+        s.s==='done'?pill('Selesai','ok'):pill('Belum','neut')}
+    </div>`).join('')}</div>`;
+}
+function rMenu(){
+  return head('Menu harian','Susun menu & porsi, lalu kirim ke ahli gizi untuk disetujui.','Tambah menu')+
+  tableCard(['Tanggal','Menu','Kalori','Protein','Status',''],
+    MENU.map(m=>[`<span class="ttl">${m.tgl}</span>`,m.nama,`${m.kal} kkal`,`${m.prot} g`,pill(m.st[0],m.st[1]),`<button class="btn btn-sm">Lihat</button>`]))+
+  `<div class="banner" style="margin-top:16px"><i data-lucide="info"></i> Ahli gizi memeriksa setiap menu agar sesuai Angka Kecukupan Gizi (AKG) sebelum diproduksi.</div>`;
+}
+function rPengadaan(){
+  return head('Pengadaan bahan','Setujui permintaan beli, lalu pantau pesanan sampai bahan diterima.','Buat permintaan')+
+  tableCard(['No','Supplier','Bahan','Total','Status',''],
+    PO.map(p=>[`<span class="ttl">${p.no}</span>`,p.sup,`<span class="sub">${p.item}</span>`,Rp(p.total),pill(p.st[0],p.st[1]),
+      p.st[1]==='warn'?`<button class="btn btn-pri btn-sm">Setujui</button>`:p.st[1]==='blue'?`<button class="btn btn-sm">Terima</button>`:`<button class="btn btn-sm">Lihat</button>`]));
+}
+function rStok(){
+  return head('Stok & bahan','Pantau persediaan bahan baku dan lakukan stok opname.','Stok opname')+
+  `<div class="banner"><i data-lucide="alert-triangle"></i> 1 batch ayam akan kedaluwarsa dalam 2 hari. Gunakan lebih dulu (FEFO).</div>`+
+  tableCard(['Bahan','Stok','Status',''],
+    STOK.map(s=>[`<span class="ttl">${s.nama}</span>`,`${F(s.stok)} ${s.sat}`,pill(s.st[0],s.st[1]),
+      s.st[1]==='red'?`<button class="btn btn-pri btn-sm">Pesan ulang</button>`:`<button class="btn btn-sm">Detail</button>`]));
+}
+function rProduksi(){
+  const qc=[['Suhu masak ayam ≥ 75°C',1],['Rasa & tekstur sesuai standar',1],['Porsi sesuai takaran',0],['Kebersihan alat masak',0],['Sampel makanan disimpan 24 jam',0]];
+  return head('Produksi','Catat proses masak, centang cek mutu (QC) dan langkah SOP.')+
+  `<div class="split">
+    <div class="card">
+      <div class="card-h"><h2>Batch produksi pagi</h2>${pill('Sedang berjalan','blue')}</div>
+      <div class="cards" style="grid-template-columns:1fr 1fr">
+        <div class="stat" style="border-radius:10px"><div class="k">Target porsi</div><div class="v" style="font-size:22px">${F(1250)}</div></div>
+        <div class="stat" style="border-radius:10px"><div class="k">Sudah dimasak</div><div class="v ok" style="font-size:22px">${F(740)}</div></div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-pri" style="width:100%;justify-content:center">Selesaikan produksi</button></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h2>Cek mutu (QC)</h2><span class="sub">2 dari 5</span></div>
+      ${qc.map(q=>`<div class="qc ${q[1]?'done':''}"><span class="box">${q[1]?'<i data-lucide="check"></i>':''}</span><span class="lbl">${q[0]}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+function rDistribusi(){
+  return head('Distribusi','Antar makanan ke sekolah dan unggah foto bukti terima.')+
+  tableCard(['Sekolah','Porsi','Jam terima','Status',''],
+    DIST.map(d=>[`<span class="ttl">${d.sek}</span>`,F(d.porsi),d.jam,pill(d.st[0],d.st[1]),
+      d.st[1]==='ok'?`<button class="btn btn-sm"><i data-lucide="image"></i> Bukti</button>`:
+      d.st[1]==='blue'?`<button class="btn btn-pri btn-sm">Tandai terkirim</button>`:`<button class="btn btn-pri btn-sm">Mulai antar</button>`]));
+}
+function rKeuangan(){
+  const masuk=TRX.filter(t=>t.nom>0).reduce((a,b)=>a+b.nom,0);
+  const keluar=TRX.filter(t=>t.nom<0).reduce((a,b)=>a+b.nom,0);
+  return head('Keuangan','Catat pemasukan & pengeluaran, pantau biaya per porsi.','Catat transaksi')+
+  `<div class="stats">
+    <div class="stat"><div class="k">Saldo hari ini</div><div class="v ok">${Rp(masuk+keluar)}</div></div>
+    <div class="stat"><div class="k">Pengeluaran</div><div class="v">${Rp(-keluar)}</div></div>
+    <div class="stat"><div class="k">Biaya per porsi</div><div class="v">${Rp(9800)}</div></div>
+  </div>`+
+  tableCard(['Keterangan','Kategori','Jumlah'],
+    TRX.map(t=>[`<span class="ttl">${t.ket}</span>`,`<span class="sub">${t.kat}</span>`,`<span style="color:${t.nom<0?'var(--red)':'var(--green)'};font-weight:600">${t.nom<0?'−':'+'} ${Rp(Math.abs(t.nom))}</span>`]));
+}
+function rLaporan(){
+  return head('Laporan ke BGN','Buat laporan dari data hari ini, periksa, lalu kirim ke BGN.','Buat laporan')+
+  `<div class="banner"><i data-lucide="info"></i> Laporan harian dikirim setiap hari setelah distribusi selesai. Pastikan data lengkap sebelum mengirim.</div>`+
+  tableCard(['Laporan','Status',''],
+    LAP.map(l=>[`<span class="ttl">${l.jud}</span>`,pill(l.st[0],l.st[1]),
+      l.st[1]==='neut'?`<button class="btn btn-pri btn-sm">Periksa & kirim</button>`:
+      l.st[1]==='red'?`<button class="btn btn-sm">Perbaiki</button>`:`<button class="btn btn-sm"><i data-lucide="download"></i> Ekspor</button>`]));
+}
+function rProfil(){
+  return head('Profil SPPG','Data dasar satuan pelayanan. Disetel sekali, jarang berubah.')+
+  `<div class="card" style="max-width:560px">
+    <div class="form-row"><label>Nama SPPG</label><div class="val">SPPG Cibubur 01</div></div>
+    <div class="form-row"><label>Yayasan / mitra</label><div class="val">Yayasan Gizi Sejahtera</div></div>
+    <div class="form-row"><label>Kapasitas harian</label><div class="val">3.000 porsi</div></div>
+    <div class="form-row"><label>Alamat</label><div class="val">Jl. Cibubur Raya No. 12, Jakarta Timur</div></div>
+    <div class="form-row"><label>Kepala SPPG</label><div class="val">Budi Santoso</div></div>
+    <button class="btn">Ubah data</button>
+  </div>`;
+}
+
+/* boot */
+renderNav(); go('beranda');
+</script>
+</body>
+</html>
