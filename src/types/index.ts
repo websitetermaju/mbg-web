@@ -324,6 +324,24 @@ export interface LogSuhuGudang {
   updatedAt: string
 }
 
+// ─── Higiene & kesehatan pekerja ─────────────────────────────────
+export interface PemeriksaanHigiene {
+  id: string
+  sppgId: string
+  tanggal: string
+  namaPekerja: string
+  sehat: boolean
+  tanganBersih: boolean
+  kukuPendek: boolean
+  apdLengkap: boolean
+  tanpaPerhiasan: boolean
+  lolos: boolean
+  diperiksaOlehId: string | null
+  catatan: string | null
+  createdAt: string
+  updatedAt: string
+}
+
 // ─── Supplier ─────────────────────────────────────────────────────
 export type JenisUsaha = 'PT' | 'CV' | 'KOPERASI' | 'UMKM' | 'PERORANGAN'
 export type KategoriSupplier = 'BAHAN_SEGAR' | 'BAHAN_KERING' | 'BUMBU_REMPAH' | 'KEMASAN' | 'LAINNYA'

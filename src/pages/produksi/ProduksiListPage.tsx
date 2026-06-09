@@ -109,6 +109,12 @@ export function ProduksiListPage() {
         <h1 className="text-2xl font-bold text-gray-800">Produksi</h1>
         <div className="flex items-center gap-2">
           <Link
+            to="/higiene"
+            className="border border-bgn-200 text-bgn-700 px-4 py-2 rounded-lg text-sm hover:bg-bgn-50"
+          >
+            Higiene pekerja
+          </Link>
+          <Link
             to="/sop-template"
             className="border border-bgn-200 text-bgn-700 px-4 py-2 rounded-lg text-sm hover:bg-bgn-50"
           >

@@ -35,6 +35,7 @@ import { LokasiGudangPage } from '@/pages/lokasi-gudang/LokasiGudangPage'
 import { StockOpnamePage } from '@/pages/stock-opname/StockOpnamePage'
 import { StockOpnameDetailPage } from '@/pages/stock-opname/StockOpnameDetailPage'
 import { SopTemplatePage } from '@/pages/sop-template/SopTemplatePage'
+import { HigienePage } from '@/pages/higiene/HigienePage'
 import { PenerimaListPage } from '@/pages/penerima/PenerimaListPage'
 import { PenerimaFormPage } from '@/pages/penerima/PenerimaFormPage'
 import { PenerimaDetailPage } from '@/pages/penerima/PenerimaDetailPage'
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="stock-opname" element={<StockOpnamePage />} />
           <Route path="stock-opname/:id" element={<StockOpnameDetailPage />} />
           <Route path="sop-template" element={<SopTemplatePage />} />
+          <Route path="higiene" element={<HigienePage />} />
           <Route path="produksi" element={<ProduksiListPage />} />
           <Route path="produksi/baru" element={<ProduksiFormPage />} />
           <Route path="produksi/:id" element={<ProduksiDetailPage />} />
