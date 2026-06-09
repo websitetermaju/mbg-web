@@ -501,6 +501,8 @@ export interface Sppg {
   wilayah: string
   provinsi: string
   status: SppgStatus
+  slhsNomor: string | null
+  slhsBerlakuSampai: string | null
   createdAt: string
   updatedAt: string
 }
