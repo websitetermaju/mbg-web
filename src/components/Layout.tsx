@@ -30,6 +30,7 @@ const operasional: NavItem[] = [
   { num: 4, to: '/produksi', label: 'Produksi', roles: [...INTI, 'AHLI_GIZI', 'PETUGAS_DAPUR'] },
   { num: 5, to: '/distribusi', label: 'Distribusi', roles: [...INTI, 'PETUGAS_DAPUR', 'KURIR'] },
   { num: 6, to: '/keuangan', label: 'Keuangan', roles: [...INTI, 'BENDAHARA'] },
+  { to: '/rab', label: 'RAB mingguan', roles: [...INTI, 'BENDAHARA'] },
   { num: 7, to: '/laporan', label: 'Laporan', roles: [...INTI, 'AHLI_GIZI', 'BENDAHARA'] },
 ]
 

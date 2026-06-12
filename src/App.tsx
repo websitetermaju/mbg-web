@@ -46,6 +46,8 @@ import { SppgListPage } from '@/pages/sppg/SppgListPage'
 import { SppgDetailPage } from '@/pages/sppg/SppgDetailPage'
 import { UserListPage } from '@/pages/users/UserListPage'
 import { UserFormPage } from '@/pages/users/UserFormPage'
+import { RabListPage } from '@/pages/rab/RabListPage'
+import { RabDetailPage } from '@/pages/rab/RabDetailPage'
 
 export default function App() {
   return (
@@ -88,6 +90,8 @@ export default function App() {
           <Route path="distribusi/:id" element={<DistribusiListPage />} />
           <Route path="keuangan" element={<KeuanganListPage />} />
           <Route path="keuangan/baru" element={<KeuanganFormPage />} />
+          <Route path="rab" element={<RabListPage />} />
+          <Route path="rab/:id" element={<RabDetailPage />} />
           <Route path="laporan" element={<LaporanListPage />} />
           <Route path="laporan/baru" element={<LaporanFormPage />} />
           <Route path="notifikasi" element={<NotifikasiPage />} />

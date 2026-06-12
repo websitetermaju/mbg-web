@@ -557,3 +557,47 @@ export interface Sekolah {
   createdAt: string
   updatedAt: string
 }
+
+export type JenisRabHari = 'HARIAN' | 'B3'
+
+export interface RabPenerima {
+  id: string
+  kategori: string
+  jumlahPorsi: number
+  hargaPerPorsi: number
+  subtotal: number
+}
+
+export interface RabBahan {
+  id: string
+  ctg: string | null
+  item: string
+  qty: number
+  satuan: string
+  hargaSatuan: number
+  totalHs: number
+  urutan: number
+}
+
+export interface RabHari {
+  id: string
+  namaHari: string
+  jenis: JenisRabHari
+  menu: string | null
+  totalBahanBaku: number
+  sisaAnggaran: number
+  urutan: number
+  penerima: RabPenerima[]
+  bahan: RabBahan[]
+}
+
+export interface RabMingguan {
+  id: string
+  label: string
+  totalAnggaran: number
+  penggunaanAnggaran: number
+  sisaAnggaran: number
+  sumberFile: string
+  importedAt: string
+  hari?: RabHari[]
+}
